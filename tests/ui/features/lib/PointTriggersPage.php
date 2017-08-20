@@ -17,5 +17,5 @@ class PointTriggersPage extends MauticPage
      *
      * @var string $path
      */
-    protected $path = '/s/point/triggers';
+    protected $path = '/s/points/triggers';
 }
