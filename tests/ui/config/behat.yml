@@ -1,0 +1,33 @@
+default:
+  autoload:
+    '': %paths.base%/../features/bootstrap
+  extensions:
+    SensioLabs\Behat\PageObjectExtension: ~
+
+  suites:
+    basic:
+      paths:
+        - %paths.base%/../features/basic
+      context: &common_suite_context
+        parameters:
+          mauticPath: ./
+          adminUsername: mauticadmin
+          adminPassword: admin123
+          regularUserPassword: xyz123456
+          regularUserName: regularuser
+          regularUserNames: user1,user2,user3,usergrp,grpuser
+      contexts:
+        - FeatureContext:
+        - LoginContext:
+        - ContactsContext:
+        - DashboardContext:
+        - NavSidebarContext:
+
+    contacts:
+      paths:
+        - %paths.base%/../features/contacts
+      context: *common_suite_context
+      contexts:
+        - FeatureContext:
+        - LoginContext:
+        - ContactsContext:
