@@ -17,5 +17,5 @@ class ReportsPage extends MauticPage
      *
      * @var string $path
      */
-    protected $path = '/reports';
+    protected $path = '/s/reports';
 }
