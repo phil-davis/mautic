@@ -1,4 +1,7 @@
-Feature: navSidebar
+Feature: Navigate using the sidebar
+  In order to access Mautic application settings
+  As a user
+  I want to be able to navigate between pages
 
   Scenario: navigate through the sidebar pages
     Given I am logged in as admin
@@ -39,3 +42,23 @@ Feature: navSidebar
     Then I should be redirected to a page with the title "Reports | Mautic"
     When I select the Dashboard sidebar entry
     Then I should be redirected to a page with the title "Dashboard | Mautic"
+
+  Scenario: start at a different main page and navigate from there
+    Given I go to the calendar page
+    Then I should be redirected to a page with the title "Mautic"
+    When I login with username "mauticadmin" and password "admin123" after a redirect from the "contacts" page
+    Then I should be redirected to a page with the title "Calendar | Mautic"
+    When I select the Components sidebar entry and Forms sub-entry
+    Then I should be redirected to a page with the title "Forms | Mautic"
+    When I select the Reports sidebar entry
+    Then I should be redirected to a page with the title "Reports | Mautic"
+
+  Scenario: start at a sub-entry page and navigate from there
+    Given I go to the social monitoring page
+    Then I should be redirected to a page with the title "Mautic"
+    When I login with username "mauticadmin" and password "admin123" after a redirect from the "social monitoring" page
+    Then I should be redirected to a page with the title "Social Monitoring | Mautic"
+    When I select the Components sidebar entry and "Landing Pages" sub-entry
+    Then I should be redirected to a page with the title "Landing Pages | Mautic"
+    When I select the Companies sidebar entry
+    Then I should be redirected to a page with the title "Companies | Mautic"

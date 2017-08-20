@@ -17,5 +17,5 @@ class StagesPage extends MauticPage
      *
      * @var string $path
      */
-    protected $path = '/stages';
+    protected $path = '/s/stages';
 }
