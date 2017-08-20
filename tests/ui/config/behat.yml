@@ -19,9 +19,25 @@ default:
       contexts:
         - FeatureContext:
         - LoginContext:
+        - AssetsContext:
+        - CalendarContext:
+        - CampaignsContext:
+        - CompaniesContext:
         - ContactsContext:
         - DashboardContext:
+        - DynamicContentContext:
+        - EmailsContext:
+        - FocusItemsContext:
+        - FormsContext:
+        - LandingPagesContext:
+        - MarketingMessagesContext:
         - NavSidebarContext:
+        - PointsContext:
+        - PointTriggersContext:
+        - ReportsContext:
+        - SegmentsContext:
+        - SocialMonitoringContext:
+        - StagesContext:
 
     contacts:
       paths:
