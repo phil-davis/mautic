@@ -1,4 +1,7 @@
 Feature: login
+  In order to access Mautic
+  As an authorised user
+  I want to be able to authenticate myself with a username and password
 
   @skip @to-be-implemented
   Scenario: simple user login
