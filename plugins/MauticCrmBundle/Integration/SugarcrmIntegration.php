@@ -1277,11 +1277,6 @@ class SugarcrmIntegration extends CrmAbstractIntegration
         return $leadFields;
     }
 
-    /*
-     * @param array $params
-     * @return mixed
-    */
-
     /**
      * @param array $params
      *
