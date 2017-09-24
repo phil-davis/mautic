@@ -248,7 +248,6 @@ class PublicController extends CommonFormController
             'lead'     => $lead,
             'template' => $template,
             'message'  => $message,
-
         ];
 
         if (!empty($formContent)) {

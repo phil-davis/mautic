@@ -912,7 +912,7 @@ class ZohoIntegration extends CrmAbstractIntegration
         }
 
         // Switch to Lead
-        $toUpdate = $integrationEntityRepo->findLeadsToUpdate('Zoho', 'lead', $fields, $totalToUpdate, $params['start'], $params['end'],  'Leads', [])['Leads'];
+        $toUpdate = $integrationEntityRepo->findLeadsToUpdate('Zoho', 'lead', $fields, $totalToUpdate, $params['start'], $params['end'], 'Leads', [])['Leads'];
 
         if (is_array($toUpdate)) {
             $leadCount = count($toUpdate);

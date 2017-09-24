@@ -456,7 +456,6 @@ class CompanyModel extends CommonFormModel implements AjaxLookupModelInterface
             );
 
             if ($companyLead == null) {
-
                 // Lead is not part of this list
                 continue;
             }
@@ -808,7 +807,6 @@ class CompanyModel extends CommonFormModel implements AjaxLookupModelInterface
                 // Skip if the value is in the CSV row
                 continue;
             } elseif ($entityField['defaultValue']) {
-
                 // Fill in the default value if any
                 $fieldData[$entityField['alias']] = ('multiselect' === $entityField['type']) ? [$entityField['defaultValue']] : $entityField['defaultValue'];
             }

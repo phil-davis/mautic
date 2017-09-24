@@ -317,7 +317,7 @@ class TriggerModel extends CommonFormModel
      *
      * @return bool Was event triggered
      */
-    public function triggerEvent($event, Lead $lead = null,  $force = false)
+    public function triggerEvent($event, Lead $lead = null, $force = false)
     {
         //only trigger events for anonymous users
         if (!$force && !$this->security->isAnonymous()) {

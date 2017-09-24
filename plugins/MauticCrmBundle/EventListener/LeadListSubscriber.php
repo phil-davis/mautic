@@ -41,6 +41,7 @@ class LeadListSubscriber extends CommonSubscriber
         $this->helper    = $helper;
         $this->listModel = $listModel;
     }
+
     /**
      * {@inheritdoc}
      */
