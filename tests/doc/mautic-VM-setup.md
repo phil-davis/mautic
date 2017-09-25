@@ -229,6 +229,25 @@ composer install
 ``composer`` will pull down all other dependencies that are needed.
 It will take some time to run.
 
+If using the PHP dev server (as described in this document) then edit 
+``/etc/php/5.6/cli/php.ini`` and set the timezone to something valid, e.g.:
+```
+; Defines the default timezone used by the date functions
+; http://php.net/date.timezone
+date.timezone = 'Asia/Kathmandu'
+```
+
+If using/testing on PHP 5.6 then you must also set:
+```
+; Always populate the $HTTP_RAW_POST_DATA variable. PHP's default behavior is
+; to disable this feature and it will be removed in a future version.
+; If post reading is disabled through enable_post_data_reading,
+; $HTTP_RAW_POST_DATA is *NOT* populated.
+; http://php.net/always-populate-raw-post-data
+always_populate_raw_post_data = -1
+```
+(see https://github.com/mautic/mautic/pull/1860/files for some detail)
+
 You can also setup a the database that the unit tests will use. These expect a
 MySQL user called ``travis`` with no password:
 ```
