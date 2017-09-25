@@ -39,7 +39,7 @@ trait BasicStructure
     public function iAmLoggedInAsAdmin()
     {
         $this->loginPage->open();
-        $this->filesPage = $this->loginPage->loginAs("mauticadmin", "admin123");
+        $this->filesPage = $this->loginPage->loginAs("admin", "mautic");
         $this->filesPage->waitTillPageIsLoaded($this->getSession());
     }
 
