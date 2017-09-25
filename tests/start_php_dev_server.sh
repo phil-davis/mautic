@@ -8,6 +8,13 @@
 # @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 #
 
+# $1 hostname[:port] on which server will listen
+# $2 instance type being started (e.g. primary or IPv4 or IPv6)
+
+# After return, the following global vars are available:
+# serverPID PID of the server process created (if any)
+# ERROR_STARTING_SERVER set to true if there was an error
+
 function start_php_dev_server {
 	php -S $1 > /dev/null 2>&1 &
 	serverPID=$!
