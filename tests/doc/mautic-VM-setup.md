@@ -171,6 +171,11 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 Click the "Install" button and enter the root password.
 
+Install Java:
+```
+sudo apt-get install default-jre
+```
+
 Get the current Selenium jar file from:
 http://docs.seleniumhq.org/download/
 e.g. At the time of writing it was:
@@ -224,6 +229,26 @@ composer install
 ``composer`` will pull down all other dependencies that are needed.
 It will take some time to run.
 
+You can also setup a the database that the unit tests will use. These expect a
+MySQL user called ``travis`` with no password:
+```
+mysql -u root -p
+CREATE DATABASE mautictest;
+CREATE USER 'travis'@'localhost' IDENTIFIED BY '';
+GRANT ALL PRIVILEGES ON *.* TO 'travis'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+Here are some hints on manipulating MySQL users and databases:
+```
+ALTER USER user IDENTIFIED BY 'auth_string';
+DROP USER 'username'@'localhost';
+SELECT user FROM mysql.user;
+DESCRIBE mysql.user;
+SHOW DATABASES;
+```
+
 ### 6. Startup Mautic and Selenium
 
 To run tests, you need the Mautic server running and Selenium
@@ -234,13 +259,14 @@ In a separate terminal, start Selenium:
 
 ```
 cd selenium
-java -jar selenium-server-standalone-3.5.0.jar -port 4445
+java -jar selenium-server-standalone-3.5.3.jar -port 4445
 ```
 
-In another terminal, start the Mautic PHP development server:
-
+In another terminal, start the Mautic PHP development server.
+You can make a script like:
 ```
-cd core
+#!/bin/bash
+cd mautic
 export SRV_HOST_NAME=localhost
 export SRV_HOST_URL=""
 export SRV_HOST_PORT=8080
@@ -296,4 +322,12 @@ bash tests/start_ui_tests.sh --feature tests/ui/features/basic/navsidebar.featur
 You can run tests with a particular tag by specifying the tag:
 ```
 bash tests/start_ui_tests.sh --tags skip
+```
+
+### 7. Run the Unit tests
+
+Make sure that the ``mautictest`` database and ``travis`` user have been setup.
+Then run the unit tests from the ``mautic`` git repo folder:
+```
+bin/phpunit --bootstrap vendor/autoload.php --configuration app/phpunit.xml.dist
 ```
