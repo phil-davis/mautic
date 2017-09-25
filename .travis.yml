@@ -6,8 +6,15 @@ services:
   - mysql
 
 php:
+  - 5.6.19
   - 7.0
   - 7.1
+
+env:
+  global:
+    - TC=unit
+    - SRV_HOST_NAME=localhost
+    - SRV_HOST_PORT=8080
 
 before_install:
   # Create mautictest database
@@ -28,14 +35,32 @@ before_install:
 install:
   - composer install
 
+before_script:
+  - if [[ $TC == 'selenium' ]]; then tests/setup_ui_tests.sh; fi
+  - if [[ $TC == 'selenium' ]]; then tests/start_php_dev_server.sh; fi
+
 script:
 
   # Run PHPUnit
-  - bin/phpunit --bootstrap vendor/autoload.php --configuration app/phpunit.xml.dist --fail-on-warning
+  - if [[ $TC == 'unit' ]]; then bin/phpunit --bootstrap vendor/autoload.php --configuration app/phpunit.xml.dist --fail-on-warning; fi
 
   # Run PHPSTAN analysis for PHP 7+
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "5.6" ]]; then ~/.composer/vendor/phpstan/phpstan-shim/phpstan.phar analyse app/bundles/CampaignBundle app/bundles/WebhookBundle app/bundles/LeadBundle; fi
+  - if [[ $TC == 'unit'  && ${TRAVIS_PHP_VERSION:0:3} != "5.6" ]]; then ~/.composer/vendor/phpstan/phpstan-shim/phpstan.phar analyse app/bundles/CampaignBundle app/bundles/WebhookBundle app/bundles/LeadBundle; fi
 
   # Check if the code standards weren't broken.
   # Run it only on PHP 7.1 which should be the fastest. No need to run it for all PHP versions
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then bin/php-cs-fixer fix -v --dry-run --diff; fi
+  - if [[ $TC == 'unit'  && ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then bin/php-cs-fixer fix -v --dry-run --diff; fi
+
+  - if [[ $TC == 'selenium' ]]; then tests/start_ui_tests.sh; fi
+
+matrix:
+  include:
+    - php: 7.1
+      env: TC=selenium BROWSER="chrome" BROWSER_VERSION="latest" BEHAT_SUITE="basic" PLATFORM="Windows 10"
+      addons:
+        sauce_connect: true
+
+    - php: 7.1
+      env: TC=selenium BROWSER="firefox" BROWSER_VERSION="47.0" BEHAT_SUITE="basic" PLATFORM="Windows 10"
+      addons:
+        sauce_connect: true
