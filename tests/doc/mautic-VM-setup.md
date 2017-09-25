@@ -299,21 +299,32 @@ It will take you through 3 pages of setup:
 Mautic Installation - Database Setup page:
 
 MySQL PDO (Recommended)
-Database Host: localhost
-Database Port: 3306
-Database Name: mauticdb
+
+Database Host: ``localhost``
+
+Database Port: ``3306``
+
+Database Name: ``mauticdb``
+
 Database Table Prefix: -
-Database Username: mauticuser
-Database Password: dev123pwd
+
+Database Username: ``mauticuser``
+
+Database Password: ``dev123pwd``
+
 Backup existing tables? No
 
 Mautic Installation - Administrative User :
 
-Admin Username: mauticadmin
-Admin Password: admin123
+Admin Username: ``mauticadmin``
+
+Admin Password: ``admin123``
+
 First name: Mautic
+
 Last name: Admin
-E-mail address: me@somewhere.com
+
+E-mail address: ``me@somewhere.com``
 
 Mautic Installation - Email Configuration 
 
