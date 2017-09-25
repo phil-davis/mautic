@@ -25,7 +25,7 @@ At regular intervals it will be rebased on ``staging`` to make sure that it keep
 with other Mautic development. That will be done when there are no (or few) other pull request
 branches depending on it.
 
-``ui-api-test-doc`` is branched from ``ui-api-test-dev``.
+``ui-api-doc`` is branched from ``staging``. This avoids seeing merge issues in the real code.
 This contains documentation (like this document you are reading now) about the API and
 UI test development. It is intended to contain helpful documentation and notes and is
 not intended to be a final documentation for delivery. Final documentation would likely be
@@ -66,3 +66,12 @@ git checkout ui-api-test-dev
 git fetch origin
 git pull
 ```
+
+When ``ui-api-test-dev`` is fairly stable, it can be rebased locally and forced up:
+```
+git rebase staging
+git push -f
+```
+
+Note: doing this will break any branches off ``ui-api-test-dev`` - so only do it when 
+pending work is resolved and merged.
