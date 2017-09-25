@@ -719,7 +719,6 @@ class PageModel extends FormModel
 
                 // if additional data were sent with the tracking pixel
                 if (isset($query)) {
-
                     // URL attr 'd' is encoded so let's decode it first.
                     $decoded = false;
                     if (isset($query['d'])) {
@@ -991,7 +990,7 @@ class PageModel extends FormModel
             $label = empty($result['device']) ? $this->translator->trans('mautic.core.no.info') : $result['device'];
 
             // $data['backgroundColor'][]='rgba(220,220,220,0.5)';
-            $chart->setDataset($label,  $result['count']);
+            $chart->setDataset($label, $result['count']);
         }
 
         return $chart->render();

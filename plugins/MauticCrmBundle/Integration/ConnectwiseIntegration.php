@@ -55,6 +55,7 @@ class ConnectwiseIntegration extends CrmAbstractIntegration
             'appcookie' => 'mautic.connectwise.form.cookie',
         ];
     }
+
     /**
      * Get the array key for application cookie.
      *
@@ -134,6 +135,7 @@ class ConnectwiseIntegration extends CrmAbstractIntegration
     {
         return $this->router->generate('mautic_integration_auth_callback', ['integration' => $this->getName()]);
     }
+
     /**
      * @return array
      */
@@ -144,6 +146,7 @@ class ConnectwiseIntegration extends CrmAbstractIntegration
             'requires_authorization' => true,
         ];
     }
+
     /**
      * @return bool
      */
@@ -548,7 +551,7 @@ class ConnectwiseIntegration extends CrmAbstractIntegration
      *
      * @return array|bool
      */
-    public function pushLead($lead,  $config = [])
+    public function pushLead($lead, $config = [])
     {
         $config      = $this->mergeConfigToFeatureSettings($config);
         $personFound = false;
@@ -691,6 +694,7 @@ class ConnectwiseIntegration extends CrmAbstractIntegration
 
         return $matched;
     }
+
     /**
      * @param       $fieldsToUpdate
      * @param array $objects
@@ -713,22 +717,23 @@ class ConnectwiseIntegration extends CrmAbstractIntegration
 
         return $fieldsToUpdate;
     }
-     /**
-      * @param        $config
-      * @param null   $object
-      * @param string $priorityObject
-      *
-      * @return mixed
-      */
-     protected function getPriorityFieldsForMautic($config, $object = null, $priorityObject = 'mautic')
-     {
-         if ($object == 'company') {
-             $priority = parent::getPriorityFieldsForMautic($config, $object, 'mautic_company');
-             $fields   = array_intersect_key($config['companyFields'], $priority);
-         } else {
-             $fields = parent::getPriorityFieldsForMautic($config, $object, $priorityObject);
-         }
 
-         return ($object && isset($fields[$object])) ? $fields[$object] : $fields;
-     }
+    /**
+     * @param        $config
+     * @param null   $object
+     * @param string $priorityObject
+     *
+     * @return mixed
+     */
+    protected function getPriorityFieldsForMautic($config, $object = null, $priorityObject = 'mautic')
+    {
+        if ($object == 'company') {
+            $priority = parent::getPriorityFieldsForMautic($config, $object, 'mautic_company');
+            $fields   = array_intersect_key($config['companyFields'], $priority);
+        } else {
+            $fields = parent::getPriorityFieldsForMautic($config, $object, $priorityObject);
+        }
+
+        return ($object && isset($fields[$object])) ? $fields[$object] : $fields;
+    }
 }

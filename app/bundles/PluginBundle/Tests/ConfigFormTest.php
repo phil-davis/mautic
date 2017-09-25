@@ -175,7 +175,6 @@ class ConfigFormTest extends KernelTestCase
                             'api_keys'        => $apiKeys,
                             'is_published'    => true,
                             'feature_sttings' => $featureSettings,
-
         ], ]));
         $integrationHelper = new IntegrationHelper(
             self::$kernel,

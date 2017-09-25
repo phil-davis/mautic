@@ -34,7 +34,6 @@ return [
             ],
         ],
         'public' => [
-
         ],
     ],
 
@@ -48,13 +47,10 @@ return [
             ],
         ],
         'admin' => [
-
         ],
         'profile' => [
-
         ],
         'extra' => [
-
         ],
     ],
 
@@ -78,7 +74,6 @@ return [
                     'mautic.core.model.auditlog',
                 ],
             ],
-
         ],
         'forms' => [
             \Mautic\ChannelBundle\Form\Type\MessageType::class => [
@@ -130,6 +125,5 @@ return [
     ],
 
     'parameters' => [
-
     ],
 ];
