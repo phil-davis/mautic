@@ -46,7 +46,7 @@ Feature: Navigate using the sidebar
   Scenario: start at a different main page and navigate from there
     Given I go to the calendar page
     Then I should be redirected to a page with the title "Mautic"
-    When I login with username "mauticadmin" and password "admin123" after a redirect from the "contacts" page
+    When I login with username "admin" and password "mautic" after a redirect from the "contacts" page
     Then I should be redirected to a page with the title "Calendar | Mautic"
     When I select the Components sidebar entry and Forms sub-entry
     Then I should be redirected to a page with the title "Forms | Mautic"
@@ -56,7 +56,7 @@ Feature: Navigate using the sidebar
   Scenario: start at a sub-entry page and navigate from there
     Given I go to the social monitoring page
     Then I should be redirected to a page with the title "Mautic"
-    When I login with username "mauticadmin" and password "admin123" after a redirect from the "social monitoring" page
+    When I login with username "admin" and password "mautic" after a redirect from the "social monitoring" page
     Then I should be redirected to a page with the title "Social Monitoring | Mautic"
     When I select the Components sidebar entry and "Landing Pages" sub-entry
     Then I should be redirected to a page with the title "Landing Pages | Mautic"
