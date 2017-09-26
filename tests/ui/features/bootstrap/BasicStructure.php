@@ -23,6 +23,8 @@ trait BasicStructure
 {
     private $adminUsername;
     private $adminPassword;
+    private $salesUsername;
+    private $salesPassword;
     private $regularUserPassword;
     private $regularUserName;
     private $regularUserNames = array();
@@ -39,9 +41,15 @@ trait BasicStructure
      */
     public function iAmLoggedInAsAdmin()
     {
-        $this->loginPage->open();
-        $this->filesPage = $this->loginPage->loginAs($this->adminUsername, $this->adminPassword);
-        $this->filesPage->waitTillPageIsLoaded($this->getSession());
+        $this->iAmLoggedInAs($this->adminUsername, $this->adminPassword);
+    }
+
+    /**
+     * @Given I am logged in as sales
+     */
+    public function iAmLoggedInAsSales()
+    {
+        $this->iAmLoggedInAs($this->salesUsername, $this->salesPassword);
     }
 
     /**
@@ -49,8 +57,13 @@ trait BasicStructure
      */
     public function iAmLoggedInAsARegularUser()
     {
+        $this->iAmLoggedInAs($this->regularUserName, $this->regularUserPassword);
+    }
+
+    public function iAmLoggedInAs($username, $password)
+    {
         $this->loginPage->open();
-        $this->filesPage = $this->loginPage->loginAs($this->regularUserName, $this->regularUserPassword);
+        $this->filesPage = $this->loginPage->loginAs($username, $password);
         $this->filesPage->waitTillPageIsLoaded($this->getSession());
     }
 
@@ -130,6 +143,8 @@ trait BasicStructure
         $suiteParameters = $scope->getEnvironment()->getSuite()->getSettings() ['context'] ['parameters'];
         $this->adminUsername = (string)$suiteParameters['adminUsername'];
         $this->adminPassword = (string)$suiteParameters['adminPassword'];
+        $this->salesUsername = (string)$suiteParameters['salesUsername'];
+        $this->salesPassword = (string)$suiteParameters['salesPassword'];
         $this->regularUserNames = explode(",", $suiteParameters['regularUserNames']);
         $this->regularUserName = (string)$suiteParameters['regularUserName'];
         $this->regularUserPassword = (string)$suiteParameters['regularUserPassword'];
@@ -176,6 +191,8 @@ trait BasicStructure
     {
         if ($username === $this->adminUsername) {
             $password = $this->adminPassword;
+        } elseif ($username === $this->salesUsername) {
+            $password = $this->salesPassword;
         } else {
             if (!array_key_exists($username, $this->createdUsers)) {
                 throw new Exception("user '$username' was not created by this test run");
