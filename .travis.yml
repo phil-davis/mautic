@@ -18,7 +18,7 @@ env:
 
 before_install:
   # Create mautictest database
-  - mysql -e 'CREATE DATABASE mautictest;'
+  - if [[ $TC == 'unit' ]]; then mysql -e 'CREATE DATABASE mautictest;'; fi
 
   # turn off XDebug
   - phpenv config-rm xdebug.ini || return
