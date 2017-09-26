@@ -21,6 +21,8 @@ class NavSidebarPage extends MauticPage
      */
     protected $path = '/s/login';
 
+    protected $navSidebarMinimizerClass = '.sidebar-minimizer';
+
     protected $navSidebarIds = [
         'dashboard' => 'mautic_dashboard_index',
         'calendar' => 'mautic_calendar_index',
@@ -117,5 +119,21 @@ class NavSidebarPage extends MauticPage
         }
 
         return $this->getPage($page);
+    }
+
+    /**
+     * Flip the state of the navigation sidebar menu between being expanded or collapsed.
+     *
+     * @return void
+     */
+    public function flipNavSidebarMenu()
+    {
+        $navSidebarCollapseElement = $this->find('css', $this->navSidebarMinimizerClass);
+
+        if ($navSidebarCollapseElement === null) {
+            throw new ElementNotFoundException("could not find nav sidebar collapse element ");
+        }
+
+        $navSidebarCollapseElement->click();
     }
 }
