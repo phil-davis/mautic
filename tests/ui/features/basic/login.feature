@@ -3,11 +3,8 @@ Feature: login
   As an authorised user
   I want to be able to authenticate myself with a username and password
 
-  @skip @to-be-implemented
-  Scenario: simple user login
-    Given a regular user exists
-    And I am on the login page
-    When I login as a regular user with a correct password
+  Scenario: simple user login to the sales account
+    Given I am logged in as sales
     Then I should be redirected to a page with the title "Dashboard | Mautic"
 
   Scenario: admin login
