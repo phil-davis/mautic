@@ -39,6 +39,23 @@ class FeatureContext extends RawMinkContext implements Context
     public function iShouldBeRedirectedToAPageWithTheTitle($title)
     {
         $this->mauticPage->waitForOutstandingAjaxCalls($this->getSession());
+        $this->iAmOnAPageWithTheTitle($title);
+    }
+
+    /**
+     * @Then I should be redirected to a page with the title :title within :sec seconds
+     */
+    public function iShouldBeRedirectedToAPageWithTheTitleSeconds($title, $sec)
+    {
+        $this->mauticPage->waitForOutstandingAjaxCalls($this->getSession(), $sec * 1000);
+        $this->iAmOnAPageWithTheTitle($title);
+    }
+
+    /**
+     * @Then I am on a page with the title :title
+     */
+    public function iAmOnAPageWithTheTitle($title)
+    {
         $actualTitle = $this->getSession()->getPage()->find(
             'xpath', './/title'
         )->getHtml();
