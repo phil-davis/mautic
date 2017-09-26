@@ -13,6 +13,8 @@ default:
           mauticPath: ./
           adminUsername: admin
           adminPassword: mautic
+          salesUsername: sales
+          salesPassword: mautic
           regularUserPassword: xyz123456
           regularUserName: regularuser
           regularUserNames: user1,user2,user3,usergrp,grpuser
