@@ -36,7 +36,7 @@ class NavTopbarContext extends RawMinkContext implements Context
     }
 
     /**
-     * @Given I select the :entry topbar entry
+     * @When I select the :entry topbar entry
      */
     public function iSelectTheTopbarEntry($entry)
     {
@@ -44,9 +44,25 @@ class NavTopbarContext extends RawMinkContext implements Context
     }
 
     /**
+     * @When I open/close the settings panel
+     */
+    public function iOpenCloseTheSettingsPanel()
+    {
+        $this->navTopbarPage->clickTheSettingsGear();
+    }
+
+    /**
+     * @When I select the :entry settings entry
+     */
+    public function iSelectTheSettingsEntry($entry)
+    {
+        $this->navTopbarPage->selectSettingsPanelEntry($entry);
+    }
+
+    /**
      * @Then the user display name is :fullName
      */
-    public function iExpandCollapseTheSidebarMenu($fullName)
+    public function theUserDisplayNameIs($fullName)
     {
         PHPUnit_Framework_Assert::assertEquals(
             $fullName,
