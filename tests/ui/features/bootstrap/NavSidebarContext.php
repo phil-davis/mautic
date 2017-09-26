@@ -51,4 +51,12 @@ class NavSidebarContext extends RawMinkContext implements Context
     {
         $this->navSidebarPage->selectNavSidebarEntry($entry, $subentry);
     }
+
+    /**
+     * @Given I expand/collapse the sidebar menu
+     */
+    public function iExpandCollapseTheSidebarMenu()
+    {
+        $this->navSidebarPage->flipNavSidebarMenu();
+    }
 }
