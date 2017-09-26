@@ -21,6 +21,7 @@ require_once 'bootstrap.php';
  */
 trait BasicStructure
 {
+    private $adminUsername;
     private $adminPassword;
     private $regularUserPassword;
     private $regularUserName;
@@ -39,7 +40,7 @@ trait BasicStructure
     public function iAmLoggedInAsAdmin()
     {
         $this->loginPage->open();
-        $this->filesPage = $this->loginPage->loginAs("admin", "mautic");
+        $this->filesPage = $this->loginPage->loginAs($this->adminUsername, $this->adminPassword);
         $this->filesPage->waitTillPageIsLoaded($this->getSession());
     }
 
@@ -127,6 +128,7 @@ trait BasicStructure
     public function setUpScenarioGetRegularUsers(BeforeScenarioScope $scope)
     {
         $suiteParameters = $scope->getEnvironment()->getSuite()->getSettings() ['context'] ['parameters'];
+        $this->adminUsername = (string)$suiteParameters['adminUsername'];
         $this->adminPassword = (string)$suiteParameters['adminPassword'];
         $this->regularUserNames = explode(",", $suiteParameters['regularUserNames']);
         $this->regularUserName = (string)$suiteParameters['regularUserName'];
@@ -172,7 +174,7 @@ trait BasicStructure
      */
     public function getUserPassword($username)
     {
-        if ($username === 'admin') {
+        if ($username === $this->adminUsername) {
             $password = $this->adminPassword;
         } else {
             if (!array_key_exists($username, $this->createdUsers)) {
