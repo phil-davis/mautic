@@ -206,17 +206,6 @@ total 34600
 
 ### 5. Install and Setup Mautic
 
-Setup a MySQL database for Mautic to use:
-
-```
-mysql -u root -p
-CREATE DATABASE mauticdb;
-CREATE USER 'mauticuser'@'localhost' IDENTIFIED BY 'dev123pwd';
-GRANT ALL PRIVILEGES ON *.* TO 'mauticuser'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
-```
-
 On GitHub, go to https://github.com/mautic/mautic and press the "fork" button to
 make a forked copy of the repo. Get a clone of the forked Mautic repo.
 ```
@@ -248,53 +237,27 @@ always_populate_raw_post_data = -1
 ```
 (see https://github.com/mautic/mautic/pull/1860/files for some detail)
 
-You can also setup a the database that the unit tests will use. These expect a
-MySQL user called ``travis`` with no password:
+Create and populate the test database and installer settings:
+```
+tests/setup_ui_tests.sh
+```
+This creates the test database, populates it with some initial data and puts the
+database connection settings into ``app/config/local.php``. This avoids needing
+to go through the installer screens before running UI tests.
+
+### 5. Manual Mautic Database Setup
+
+To create a blank MySQL database for Mautic that looks like a production one:
 ```
 mysql -u root -p
-CREATE DATABASE mautictest;
-CREATE USER 'travis'@'localhost' IDENTIFIED BY '';
-GRANT ALL PRIVILEGES ON *.* TO 'travis'@'localhost';
+CREATE DATABASE mauticdb;
+CREATE USER 'mauticuser'@'localhost' IDENTIFIED BY 'dev123pwd';
+GRANT ALL PRIVILEGES ON *.* TO 'mauticuser'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 ```
-
-Here are some hints on manipulating MySQL users and databases:
-```
-ALTER USER user IDENTIFIED BY 'auth_string';
-DROP USER 'username'@'localhost';
-SELECT user FROM mysql.user;
-DESCRIBE mysql.user;
-SHOW DATABASES;
-```
-
-### 6. Startup Mautic and Selenium
-
-To run tests, you need the Mautic server running and Selenium
-(which will provide the support to run the chrome browser and
-automagically drive it with the tests).
-
-In a separate terminal, start Selenium:
-
-```
-cd selenium
-java -jar selenium-server-standalone-3.5.3.jar -port 4445
-```
-
-In another terminal, start the Mautic PHP development server.
-You can make a script like:
-```
-#!/bin/bash
-cd mautic
-export SRV_HOST_NAME=localhost
-export SRV_HOST_URL=""
-export SRV_HOST_PORT=8080
-export BROWSER=chrome
-bash tests/start_php_dev_server.sh
-```
-
-Note: The first time go to http://localhost:8080 and try to login manually.
-It will take you through 3 pages of setup:
+Then you can go through the web-based installer process to tell Mautic the initial settings.
+With the PHP dev server started, go to ``localhost:8080``. It will take you through 3 pages of setup:
 
 Mautic Installation - Database Setup page:
 
@@ -329,6 +292,59 @@ E-mail address: ``me@somewhere.com``
 Mautic Installation - Email Configuration 
 
 Take the default settings
+
+The database that the unit tests and UI tests use looks like this. They expect a MySQL user 
+called ``travis`` with no password. The unit tests set this up and load it with initial data
+(fixtures) automatically. The UI tests need it to be set up and loaded, which is easiest
+done using the script in the section above.
+```
+mysql -u root -p
+CREATE DATABASE mautictest;
+CREATE USER 'travis'@'localhost' IDENTIFIED BY '';
+GRANT ALL PRIVILEGES ON *.* TO 'travis'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+Here are some hints on manipulating MySQL users and databases:
+```
+ALTER USER user IDENTIFIED BY 'auth_string';
+DROP USER 'username'@'localhost';
+SELECT user FROM mysql.user;
+DESCRIBE mysql.user;
+SHOW DATABASES;
+```
+
+And if your "installation" seems to be remembering old installer settings, 
+then try clearing the cache:
+```
+app/console cache:clear
+```
+
+### 6. Startup Mautic and Selenium
+
+To run tests, you need the Mautic server running and Selenium
+(which will provide the support to run the chrome browser and
+automagically drive it with the tests).
+
+In a separate terminal, start Selenium:
+
+```
+cd selenium
+java -jar selenium-server-standalone-3.5.3.jar -port 4445
+```
+
+In another terminal, start the Mautic PHP development server.
+You can make a script like:
+```
+#!/bin/bash
+cd mautic
+export SRV_HOST_NAME=localhost
+export SRV_HOST_URL=""
+export SRV_HOST_PORT=8080
+export BROWSER=chrome
+bash tests/start_php_dev_server.sh
+```
 
 ### 7. Run the Behat UI tests
 
