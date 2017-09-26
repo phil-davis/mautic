@@ -25,15 +25,41 @@ class NavTopbarPage extends MauticPage
     protected $navTopbarFullNameXpath = "//span[contains(@class,'text')]";
     protected $navTopbarDropdownMenuXpath = "//*[@id='app-header']//*[@class='dropdown-menu dropdown-menu-right']";
     protected $navTopbarDropdownMenuMatchXpath = "//*[@href='%s']";
+    protected $navTopbarSettingsXpath = "//*[@id='app-header']//a[@data-toggle='sidebar']//i[contains(@class,'fa-cog')]";
 
     protected $navTopbarMenuHref = [
         'account' => '/s/account',
         'logout' => '/s/logout',
     ];
 
-    protected $navTopbarPages = [
+    protected $navTopbarMenuPages = [
         'account' => 'AccountPage',
         'logout' => 'LoginPage',
+    ];
+
+
+    protected $navSettingsPanelIds = [
+        'webhooks' => 'mautic_webhook_root',
+        'users' => 'mautic_user_index',
+        'themes' => 'mautic_themes_index',
+        'system info' => 'mautic_sysinfo_index',
+        'categories' => 'mautic_category_index',
+        'configuration' => 'mautic_config_index',
+        'roles' => 'mautic_role_index',
+        'custom fields' => 'mautic_lead_field',
+        'plugins' => 'mautic_plugin_root',
+    ];
+
+    protected $navSettingsPanelPages = [
+        'webhooks' => 'WebhooksPage',
+        'users' => 'UsersPage',
+        'themes' => 'ThemesPage',
+        'system info' => 'SystemInfoPage',
+        'categories' => 'CategoriesPage',
+        'configuration' => 'ConfigurationPage',
+        'roles' => 'RolesPage',
+        'custom fields' => 'CustomFieldsPage',
+        'plugins' => 'PluginsPage',
     ];
 
     /**
@@ -83,7 +109,7 @@ class NavTopbarPage extends MauticPage
 
         $dropdownMenuItemElement->click();
 
-        return $this->getPage($this->navTopbarPages[$entry]);
+        return $this->getPage($this->navTopbarMenuPages[$entry]);
     }
 
     /**
@@ -110,5 +136,49 @@ class NavTopbarPage extends MauticPage
         }
 
         return $fullNameElement->getText();
+    }
+
+    /**
+     * Open/close the settings panel
+     *
+     * @return void
+     */
+    public function clickTheSettingsGear()
+    {
+        $settingsElement = $this->find('xpath', $this->navTopbarSettingsXpath);
+
+        if ($settingsElement === null) {
+            throw new ElementNotFoundException(
+                "clickTheSettingsGear:could not find nav topbar settings gear element"
+            );
+        }
+
+        $settingsElement->click();
+    }
+
+    /**
+     * @param $entry
+     * @return \SensioLabs\Behat\PageObjectExtension\PageObject\Page
+     */
+    public function selectSettingsPanelEntry($entry)
+    {
+        $entry = strtolower($entry);
+
+        if (!array_key_exists($entry, $this->navSettingsPanelIds)) {
+            throw new InvalidArgumentException("no such settings panel entry " . $entry);
+        }
+
+        $entryId = $this->navSettingsPanelIds[$entry];
+        $settingsPanelElement = $this->findById($entryId);
+
+        if ($settingsPanelElement === null) {
+            throw new ElementNotFoundException("could not find settings panel element " . $entryId);
+        }
+
+        $settingsPanelElement->click();
+
+        $page = $this->navSettingsPanelPages[$entry];
+
+        return $this->getPage($page);
     }
 }
