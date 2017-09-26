@@ -34,6 +34,7 @@ default:
         - LandingPagesContext:
         - MarketingMessagesContext:
         - NavSidebarContext:
+        - NavTopbarContext:
         - PointsContext:
         - PointTriggersContext:
         - ReportsContext:
