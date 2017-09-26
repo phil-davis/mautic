@@ -245,7 +245,9 @@ This creates the test database, populates it with some initial data and puts the
 database connection settings into ``app/config/local.php``. This avoids needing
 to go through the installer screens before running UI tests.
 
-### 5. Manual Mautic Database Setup
+### 6. Manual Mautic Database Setup
+
+Note: you probably do not need to use this section for local testing.
 
 To create a blank MySQL database for Mautic that looks like a production one:
 ```
@@ -321,7 +323,7 @@ then try clearing the cache:
 app/console cache:clear
 ```
 
-### 6. Startup Mautic and Selenium
+### 7. Startup Mautic and Selenium
 
 To run tests, you need the Mautic server running and Selenium
 (which will provide the support to run the chrome browser and
@@ -346,7 +348,7 @@ export BROWSER=chrome
 bash tests/start_php_dev_server.sh
 ```
 
-### 7. Run the Behat UI tests
+### 8. Run the Behat UI tests
 
 ```
 bash tests/start_ui_tests.sh
@@ -370,7 +372,7 @@ You can run tests with a particular tag by specifying the tag:
 bash tests/start_ui_tests.sh --tags skip
 ```
 
-### 7. Run the Unit tests
+### 9. Run the Unit tests
 
 Make sure that the ``mautictest`` database and ``travis`` user have been setup.
 Then run the unit tests from the ``mautic`` git repo folder:
