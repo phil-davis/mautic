@@ -34,7 +34,7 @@ trait BasicStructure
      * @var array
      */
     private $createdUsers = array();
-    private $mauticPath;
+    private $mauticPath = null;
 
     /**
      * @Given I am logged in as admin
@@ -137,7 +137,23 @@ trait BasicStructure
             "email" => $email
         ];
     }
-    /** @BeforeScenario */
+
+    /**
+     * @BeforeScenario @fixtures
+     */
+    public function setUpTestFixtures(BeforeScenarioScope $scope)
+    {
+        if (is_null($this->mauticPath)) {
+            $suiteParameters = $scope->getEnvironment()->getSuite()->getSettings() ['context'] ['parameters'];
+            $this->mauticPath = rtrim($suiteParameters['mauticPath'], '/') . '/';
+        }
+
+        SetupHelper::loadTestFixtures($this->mauticPath);
+    }
+
+    /**
+     * @BeforeScenario
+     */
     public function setUpScenarioGetRegularUsers(BeforeScenarioScope $scope)
     {
         $suiteParameters = $scope->getEnvironment()->getSuite()->getSettings() ['context'] ['parameters'];
@@ -148,12 +164,14 @@ trait BasicStructure
         $this->regularUserNames = explode(",", $suiteParameters['regularUserNames']);
         $this->regularUserName = (string)$suiteParameters['regularUserName'];
         $this->regularUserPassword = (string)$suiteParameters['regularUserPassword'];
-        $this->mauticPath = rtrim($suiteParameters['mauticPath'], '/') . '/';
-        $output = SetupHelper::loadTestFixtures($this->mauticPath);
-        echo $output['stdOut'];
+        if (is_null($this->mauticPath)) {
+            $this->mauticPath = rtrim($suiteParameters['mauticPath'], '/') . '/';
+        }
     }
 
-    /** @AfterScenario */
+    /**
+     * @AfterScenario
+     */
     public function tearDownScenarioDeleteCreatedUsers(AfterScenarioScope $scope)
     {
         foreach ($this->getCreatedUserNames() as $user) {
