@@ -149,6 +149,8 @@ trait BasicStructure
         $this->regularUserName = (string)$suiteParameters['regularUserName'];
         $this->regularUserPassword = (string)$suiteParameters['regularUserPassword'];
         $this->mauticPath = rtrim($suiteParameters['mauticPath'], '/') . '/';
+        $output = SetupHelper::loadTestFixtures($this->mauticPath);
+        echo $output['stdOut'];
     }
 
     /** @AfterScenario */
