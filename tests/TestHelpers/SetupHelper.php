@@ -73,9 +73,22 @@ class SetupHelper {
     }
 
     /**
-     * invokes a Mautic command
+     * (Re)load the test fixtures (test database data)
      *
-     * @param array $args anything behind "mauticc".
+     * @param string $mauticPath
+     * @return string[] associated array with "code", "stdOut", "stdErr"
+     */
+    public static function loadTestFixtures($mauticPath) {
+        exec('mysql -u travis -e "set global foreign_key_checks=0;"');
+        $output = self::runMauticCommand(['doctrine:fixtures:load', '--env=test', '--no-interaction'], $mauticPath);
+        exec('mysql -u travis -e "set global foreign_key_checks=1;"');
+        return $output;
+    }
+
+    /**
+     * invokes a Mautic console command
+     *
+     * @param array $args anything behind "app/console".
      * For example: "user:add"
      * @param string $mauticPath
      * @param string $escaping
@@ -98,7 +111,7 @@ class SetupHelper {
             2 => ['pipe', 'w'],
         ];
         $process = proc_open(
-            'php console.php ' . $args, $descriptor, $pipes, $mauticPath
+            'php app/console ' . $args, $descriptor, $pipes, $mauticPath
         );
         $lastStdOut = stream_get_contents($pipes[1]);
         $lastStdErr = stream_get_contents($pipes[2]);
