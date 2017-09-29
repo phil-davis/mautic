@@ -19,4 +19,6 @@ Feature: account
     |first_name |last_name |display_name |
     |"Kovačević" |"Müller" |"Kovačević Müller" |
     |"लोरेम lorem" |"नेपाल" |"लोरेम lorem नेपाल" |
+    |"أسد" |"حسن" |"أسد حسن" |
     |"hyphen-ated" |"last-name" |"hyphen-ated last-name" |
+    |"weird@x.com #! <b>" |"[^*+$]\/ '?'" |"weird@x.com #! <b> [^*+$]\/ '?'" |
