@@ -21,6 +21,7 @@ default:
       contexts:
         - FeatureContext:
         - LoginContext:
+        - AccountContext:
         - AssetsContext:
         - CalendarContext:
         - CampaignsContext:
