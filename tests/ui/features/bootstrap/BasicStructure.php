@@ -148,7 +148,8 @@ trait BasicStructure
             $this->mauticPath = rtrim($suiteParameters['mauticPath'], '/') . '/';
         }
 
-        SetupHelper::loadTestFixtures($this->mauticPath);
+        $x = SetupHelper::loadTestFixtures($this->mauticPath);
+        echo $x['stdOut'];
     }
 
     /**

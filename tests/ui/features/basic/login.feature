@@ -1,3 +1,4 @@
+@fixtures @insulated
 Feature: login
   In order to access Mautic securely
   As an authorised user
