@@ -139,19 +139,6 @@ trait BasicStructure
     }
 
     /**
-     * @BeforeScenario @fixtures
-     */
-    public function setUpTestFixtures(BeforeScenarioScope $scope)
-    {
-        if (is_null($this->mauticPath)) {
-            $suiteParameters = $scope->getEnvironment()->getSuite()->getSettings() ['context'] ['parameters'];
-            $this->mauticPath = rtrim($suiteParameters['mauticPath'], '/') . '/';
-        }
-
-        SetupHelper::loadTestFixtures($this->mauticPath);
-    }
-
-    /**
      * @BeforeScenario
      */
     public function setUpScenarioGetRegularUsers(BeforeScenarioScope $scope)
@@ -164,9 +151,15 @@ trait BasicStructure
         $this->regularUserNames = explode(",", $suiteParameters['regularUserNames']);
         $this->regularUserName = (string)$suiteParameters['regularUserName'];
         $this->regularUserPassword = (string)$suiteParameters['regularUserPassword'];
-        if (is_null($this->mauticPath)) {
-            $this->mauticPath = rtrim($suiteParameters['mauticPath'], '/') . '/';
-        }
+        $this->mauticPath = rtrim($suiteParameters['mauticPath'], '/') . '/';
+    }
+
+    /**
+     * @AfterScenario @fixtures
+     */
+    public function resetTestFixtures(AfterScenarioScope $scope)
+    {
+        SetupHelper::loadTestFixtures($this->mauticPath);
     }
 
     /**
