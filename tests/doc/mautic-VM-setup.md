@@ -23,6 +23,7 @@ Let it create the virtual disk image.
 In the VirtualBox VM Settings:
 
 General - Advanced - Shared clipboard - choose bidirectional
+
 General - Advanced - Drag'n'Drop - choose bidirectional
 
 Network - Bridged Adapter - pick the network device your laptop is using
