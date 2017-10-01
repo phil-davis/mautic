@@ -121,7 +121,7 @@ sudo add-apt-repository ppa:ondrej/php
 sudo apt-get update
 sudo apt-get install php5.6
 sudo apt-get install php5.6-curl
-sudo apt-get install php5.6-mysel
+sudo apt-get install php5.6-mysql
 sudo apt-get install php5.6-zip
 sudo apt-get install php5.6-xml
 sudo apt-get install php5.6-mcrypt
