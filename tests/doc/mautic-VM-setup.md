@@ -239,6 +239,15 @@ always_populate_raw_post_data = -1
 ```
 (see https://github.com/mautic/mautic/pull/1860/files for some detail)
 
+Create the ``travis`` mySQL user that is used by the unit and UI tests:
+```
+mysql -u root -p
+CREATE USER 'travis'@'localhost' IDENTIFIED BY '';
+GRANT ALL PRIVILEGES ON *.* TO 'travis'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
 Create and populate the test database and installer settings:
 ```
 tests/setup_ui_tests.sh
@@ -297,17 +306,13 @@ Mautic Installation - Email Configuration
 
 Take the default settings
 
-The database that the unit tests and UI tests use looks like this. They expect a MySQL user 
-called ``travis`` with no password. The unit tests set this up and load it with initial data
-(fixtures) automatically. The UI tests need it to be set up and loaded, which is easiest
-done using the script in the section above.
+The database that the unit tests and UI tests use is created like this. They expect a MySQL user 
+called ``travis`` with no password (setup in the instructions above). The unit tests set up this 
+database and load it with initial data (fixtures) automatically. The UI tests need it to be set up 
+and loaded, which is easiest done using the script in the section above.
 ```
 mysql -u root -p
 CREATE DATABASE mautictest;
-CREATE USER 'travis'@'localhost' IDENTIFIED BY '';
-GRANT ALL PRIVILEGES ON *.* TO 'travis'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
 ```
 
 Here are some hints on manipulating MySQL users and databases:
