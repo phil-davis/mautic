@@ -51,20 +51,20 @@ Insert Guest Additions CD image...
 
 Allow to run when prompted, and put in the root password.
 
-Get all the standard Ubuntu software up-to-date:
-
-```
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get dist-upgrade
-```
-
 If the VM is on a LAN that has some IPv6 set up (e.g. for local testing) but the IPv6 does not
 work to the public internet, then change settings to prefer IPv4. Edit ``/etc/gai.conf`` and find
 the comment "For sites which prefer IPv4 connections change the last line to". Follow the instruction
 and make the last "precedence" line be:
 ```
 precedence ::ffff:0:0/96 100
+```
+
+Get all the standard Ubuntu software up-to-date:
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
 ```
 
 Reboot (just for fun, and to get the guest additions running properly with the
