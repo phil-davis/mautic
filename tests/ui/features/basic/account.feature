@@ -51,3 +51,14 @@ Feature: account
     |"أسد" |"حسن" |"أسد حسن" |
     |"hyphen-ated" |"last-name" |"hyphen-ated last-name" |
     |"weird@x.com #! <b>" |"[^*+$]\/ '?'" |"weird@x.com #! <b> [^*+$]\/ '?'" |
+
+  @fixtures
+  Scenario: modify locale-language
+    Given I am logged in as sales
+    And I select the Account topbar entry
+    Then I should be redirected to a page with the title "Account | Mautic"
+    When I set account language to "German"
+    And I apply the account changes
+    And I go to the account page
+    Then the account language is "German"
+    And the account language title is "Sprache"
