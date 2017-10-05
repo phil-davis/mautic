@@ -90,7 +90,7 @@ class AccountContext extends RawMinkContext implements Context
      */
     public function iApplyTheAccountChanges()
     {
-        $this->accountPage->applyAccountChanges();
+        $this->accountPage->applyChanges();
     }
 
     /**
