@@ -37,7 +37,6 @@ class NavTopbarPage extends MauticPage
         'logout' => 'LoginPage',
     ];
 
-
     protected $navSettingsPanelIds = [
         'webhooks' => 'mautic_webhook_root',
         'users' => 'mautic_user_index',
@@ -86,7 +85,7 @@ class NavTopbarPage extends MauticPage
             );
         }
 
-        $dropdownElement->click();
+        $this->clickWithTimeout($dropdownElement, "nav topbar dropdown element");
 
         $dropdownMenuElement = $this->find('xpath', $this->navTopbarDropdownMenuXpath);
 
@@ -107,7 +106,7 @@ class NavTopbarPage extends MauticPage
             );
         }
 
-        $dropdownMenuItemElement->click();
+        $this->clickWithTimeout($dropdownMenuItemElement, "nav topbar dropdown menu item " . $entry);
 
         return $this->getPage($this->navTopbarMenuPages[$entry]);
     }
