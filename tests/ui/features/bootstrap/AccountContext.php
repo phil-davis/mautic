@@ -43,6 +43,7 @@ class AccountContext extends RawMinkContext implements Context
         $this->visitPath($this->accountPage->getPagePath());
         $this->accountPage->waitForOutstandingAjaxCalls($this->getSession());
     }
+
     /**
      * @When I set account first name to :firstName
      */
@@ -57,6 +58,15 @@ class AccountContext extends RawMinkContext implements Context
     public function iSetAccountLastNameTo($lastName)
     {
         $this->accountPage->setLastName($lastName);
+    }
+
+    /**
+     * @When I set account password to :pwd
+     */
+    public function iSetAccountPasswordTo($pwd)
+    {
+        $this->accountPage->setPassword($pwd);
+        $this->accountPage->setConfirmPassword($pwd);
     }
 
     /**
