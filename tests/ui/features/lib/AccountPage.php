@@ -23,6 +23,8 @@ class AccountPage extends MauticPage
     protected $path = '/s/account';
     protected $firstNameInputId = "user_firstName";
     protected $lastNameInputId = "user_lastName";
+    protected $passwordInputId = "user_plainPassword_password";
+    protected $confirmPasswordInputId = "user_plainPassword_confirm";
     protected $applyButtonNormalId = "user_buttons_save_toolbar";
     protected $applyButtonMobileId = "user_buttons_save_toolbar_mobile";
 
@@ -34,6 +36,16 @@ class AccountPage extends MauticPage
     public function setLastName($lastname)
     {
         $this->fillField($this->lastNameInputId, $lastname);
+    }
+
+    public function setPassword($pwd)
+    {
+        $this->fillField($this->passwordInputId, $pwd);
+    }
+
+    public function setConfirmPassword($pwd)
+    {
+        $this->fillField($this->confirmPasswordInputId, $pwd);
     }
 
     /**
