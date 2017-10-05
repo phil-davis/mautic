@@ -1,11 +1,11 @@
-Feature: login
+Feature: login and out
   In order to access Mautic securely
   As an authorised user
   I want to be able to authenticate myself with a username and password
-  And I want to be able to logout to secure my account
+  I want to be able to logout to secure my account
 
   Scenario: simple user login to the sales account
-    Given I am logged in as sales
+    When I am logged in as sales
     Then I should be redirected to a page with the title "Dashboard | Mautic"
     And the user display name is "Sales User"
     When I logout

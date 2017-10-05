@@ -34,7 +34,7 @@ class FeatureContext extends RawMinkContext implements Context
     }
 
     /**
-     * @Then I should be redirected to a page with the title :title
+     * @Then /^I (?:should be|am) redirected to a page with the title "([^"]*)"$/
      */
     public function iShouldBeRedirectedToAPageWithTheTitle($title)
     {
