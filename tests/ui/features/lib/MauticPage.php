@@ -90,6 +90,44 @@ class MauticPage extends Page
         }
     }
 
+    /**
+     * Keep trying to click until the click works or the time has expired.
+     * Boxes can popup, e.g. after doing "Apply" saying things like
+     * "Your account has been updated". They can cover buttons/menus that
+     * we want to click, and that makes Mink-Selenium complain that the item
+     * is not clickable - "Other element would receive the click"
+     * These popups go away themselves after a few seconds, so we just wait,
+     * rather than trying to find them and close them.
+     *
+     * @param Element $element
+     * @param string $elementName
+     * @param int $timeout_msec
+     * @throws \Exception
+     */
+    public function clickWithTimeout(NodeElement $element, $elementName, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
+    {
+        $currentTime = microtime(true);
+        $end = $currentTime + ($timeout_msec / 1000);
+        while ($currentTime <= $end) {
+            try {
+                if ($element->isValid() && $element->isVisible()) {
+                    $element->click();
+                    return;
+                } else {
+                    usleep(STANDARD_SLEEP_TIME_MICROSEC);
+                }
+            } catch (WebDriverException $e) {
+                usleep(STANDARD_SLEEP_TIME_MICROSEC);
+            }
+
+            $currentTime = microtime(true);
+        }
+
+        // The timeout expired and we still cannot click
+        throw new \Exception("could not click " . $elementName . " within " . $timeout_msec . "msec");
+
+    }
+
     // TODO: see if notifications come like this in Mautic
     public function getNotificationText()
     {
