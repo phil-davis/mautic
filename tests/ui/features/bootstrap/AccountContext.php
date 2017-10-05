@@ -65,8 +65,7 @@ class AccountContext extends RawMinkContext implements Context
      */
     public function iSetAccountPasswordTo($pwd)
     {
-        $this->accountPage->setPassword($pwd);
-        $this->accountPage->setConfirmPassword($pwd);
+        $this->iSetAccountPasswordToConfirmTo($pwd, $pwd);
     }
 
     /**
