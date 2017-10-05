@@ -82,6 +82,7 @@ class NewContactContext extends RawMinkContext implements Context
     public function iApplyTheContactChanges()
     {
         $this->newContactPage->applyChanges();
+        $this->newContactPage->waitTillPageIsLoaded($this->getSession());
     }
 
     /**
