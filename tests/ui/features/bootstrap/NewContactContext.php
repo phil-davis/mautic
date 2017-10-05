@@ -90,9 +90,11 @@ class NewContactContext extends RawMinkContext implements Context
      */
     public function theContactTitleIs($title)
     {
+        // For some titles like "Mr" the UI makes it "Mr."
+        // So for now here we just compare without any "."
         PHPUnit_Framework_Assert::assertEquals(
-            $title,
-            $this->newContactPage->getTitle()
+            trim($title, '.'),
+            trim($this->newContactPage->getTitle(), '.')
         );
     }
 
