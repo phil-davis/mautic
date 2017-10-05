@@ -25,6 +25,7 @@ class AccountPage extends MauticPage
     protected $lastNameInputId = "user_lastName";
     protected $passwordInputId = "user_plainPassword_password";
     protected $confirmPasswordInputId = "user_plainPassword_confirm";
+    protected $passwordMessageXpath = "//*[@id='app-content']//div[@class='help-block']";
     protected $applyButtonNormalId = "user_buttons_save_toolbar";
     protected $applyButtonMobileId = "user_buttons_save_toolbar_mobile";
 
@@ -46,6 +47,24 @@ class AccountPage extends MauticPage
     public function setConfirmPassword($pwd)
     {
         $this->fillField($this->confirmPasswordInputId, $pwd);
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getPasswordMessage()
+    {
+        $this->waitTillElementIsNotNull($this->passwordMessageXpath);
+        $passwordMessageElement = $this->find('xpath', $this->passwordMessageXpath);
+
+        if ($passwordMessageElement === null) {
+            throw new ElementNotFoundException(
+                "getPasswordMessage:could not find password message element"
+            );
+        }
+
+        return $passwordMessageElement->getText();
     }
 
     /**
