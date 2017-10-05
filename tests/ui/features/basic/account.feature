@@ -4,6 +4,18 @@ Feature: account
   As an authorised user
   I want to be able to supply details for my user
 
+  Scenario: change passwword
+    Given I am logged in as sales
+    And I select the Account topbar entry
+    Then I should be redirected to a page with the title "Account | Mautic"
+    When I set account password to "qwe@478!"
+    And I apply the account changes
+    And I logout
+    When I login with username "sales" and invalid password "mautic"
+    Then I should be redirected to a page with the title "Mautic"
+    When I login with username "sales" and password "qwe@478!"
+    Then I should be redirected to a page with the title "Dashboard | Mautic"
+
   Scenario Outline: modify display name of a user
     Given I am logged in as sales
     And I select the Account topbar entry
