@@ -51,3 +51,4 @@ default:
         - FeatureContext:
         - LoginContext:
         - ContactsContext:
+        - NewContactContext:
