@@ -43,4 +43,88 @@ class NewContactContext extends RawMinkContext implements Context
         $this->visitPath($this->newContactPage->getPagePath());
         $this->newContactPage->waitForOutstandingAjaxCalls($this->getSession());
     }
+
+    /**
+     * @When /^I set contact title to (.*)$/
+     */
+    public function iSetContactTitleTo($title)
+    {
+        $this->newContactPage->setTitle($title);
+    }
+
+    /**
+     * @Given /^I set contact first name to (.*)$/
+     */
+    public function iSetContactFirstNameTo($firstName)
+    {
+        $this->newContactPage->setFirstName($firstName);
+    }
+
+    /**
+     * @Given /^I set contact last name to (.*)$/
+     */
+    public function iSetContactLastNameTo($lastName)
+    {
+        $this->newContactPage->setLastName($lastName);
+    }
+
+    /**
+     * @Given /^I set contact email to (.*)$/
+     */
+    public function iSetContactEmailTo($email)
+    {
+        $this->newContactPage->setEmail($email);
+    }
+
+    /**
+     * @Given /^I apply the contact changes$/
+     */
+    public function iApplyTheContactChanges()
+    {
+        $this->newContactPage->applyChanges();
+    }
+
+    /**
+     * @Then /^the contact title is (.*)$/
+     */
+    public function theContactTitleIs($title)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $title,
+            $this->newContactPage->getTitle()
+        );
+    }
+
+    /**
+     * @Given /^the contact first name is (.*)$/
+     */
+    public function theContactFirstNameIs($firstName)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $firstName,
+            $this->newContactPage->getFirstName()
+        );
+    }
+
+    /**
+     * @Given /^the contact last name is (.*)$/
+     */
+    public function theContactLastNameIs($lastName)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $lastName,
+            $this->newContactPage->getLastName()
+        );
+    }
+
+    /**
+     * @Given /^the contact email is (.*)$/
+     */
+    public function theContactEmailIs($email)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $email,
+            $this->newContactPage->getEmail()
+        );
+    }
 }
