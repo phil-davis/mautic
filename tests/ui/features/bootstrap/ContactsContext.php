@@ -43,4 +43,13 @@ class ContactsContext extends RawMinkContext implements Context
         $this->visitPath($this->contactsPage->getPagePath());
         $this->contactsPage->waitForOutstandingAjaxCalls($this->getSession());
     }
+
+    /**
+     * @Given /^I select the new contact button$/
+     */
+    public function iSelectTheNewContactButton()
+    {
+        $this->contactsPage->selectNewContactButton();
+        $this->contactsPage->waitForOutstandingAjaxCalls($this->getSession());
+    }
 }

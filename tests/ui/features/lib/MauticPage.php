@@ -199,7 +199,7 @@ class MauticPage extends Page
      * @param number $timeout_msec
      * @throws \Exception
      */
-    public function waitForOutstandingAjaxCalls (Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
+    public function waitForOutstandingAjaxCalls(Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $timeout_msec = (int) $timeout_msec;
         if ($timeout_msec <= 0) {
@@ -236,7 +236,7 @@ class MauticPage extends Page
      * @param Session $session
      * @param int $timeout_msec
      */
-    public function waitForAjaxCallsToStart (Session $session, $timeout_msec = 1000)
+    public function waitForAjaxCallsToStart(Session $session, $timeout_msec = 1000)
     {
         $timeout_msec = (int) $timeout_msec;
         if ($timeout_msec <= 0) {
@@ -258,7 +258,7 @@ class MauticPage extends Page
      * @param Session $session
      * @param int $timeout_msec
      */
-    public function waitForAjaxCallsToStartAndFinish (Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
+    public function waitForAjaxCallsToStartAndFinish(Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $start = microtime(true);
         $this->waitForAjaxCallsToStart($session);
