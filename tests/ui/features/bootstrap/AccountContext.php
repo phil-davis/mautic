@@ -61,6 +61,14 @@ class AccountContext extends RawMinkContext implements Context
     }
 
     /**
+     * @When I set account language to :language
+     */
+    public function iSetAccountLanguageTo($language)
+    {
+        $this->accountPage->selectLanguage($language);
+    }
+
+    /**
      * @When I set account password to :pwd
      */
     public function iSetAccountPasswordTo($pwd)
@@ -93,6 +101,28 @@ class AccountContext extends RawMinkContext implements Context
         PHPUnit_Framework_Assert::assertEquals(
             $message,
             trim(trim($this->accountPage->getPasswordMessage(), '.'))
+        );
+    }
+
+    /**
+     * @Then the account language title is :title
+     */
+    public function theAccountLanguageTitleIs($title)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $title,
+            $this->accountPage->getLanguageTitle()
+        );
+    }
+
+    /**
+     * @Then the account language is :language
+     */
+    public function theAccountLanguageIs($language)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $language,
+            $this->accountPage->getLanguage()
         );
     }
 
