@@ -21,11 +21,11 @@ Feature: contacts
     And I set contact last name to <last_name>
     And I set contact email to <email>
     And I apply the contact changes
-    Then the contact title is <title_out>
+    Then the contact title is <title>
     And the contact first name is <first_name>
     And the contact last name is <last_name>
     And the contact email is <email>
     Examples:
-      |title |first_name |last_name |email            |title_out |
-      |Prof  |Kovačević  |Müller    |kova@example.com |Prof |
-      |Mr    |Aaron      |Anderson  |aa@example.com   |Mr.  |
+      |title |first_name |last_name |email            |
+      |Prof  |Kovačević  |Müller    |kova@example.com |
+      |Mr    |Aaron      |Anderson  |aa@example.com   |
