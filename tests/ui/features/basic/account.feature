@@ -7,7 +7,7 @@ Feature: account
   Scenario: change passwword
     Given I am logged in as sales
     And I select the Account topbar entry
-    Then I should be redirected to a page with the title "Account | Mautic"
+    And I am redirected to a page with the title "Account | Mautic"
     When I set account password to "qwe@478!"
     And I apply the account changes
     And I logout
@@ -19,7 +19,7 @@ Feature: account
   Scenario: input too short a password
     Given I am logged in as sales
     And I select the Account topbar entry
-    Then I should be redirected to a page with the title "Account | Mautic"
+    And I am redirected to a page with the title "Account | Mautic"
     When I set account password to "short"
     And I apply the account changes
     Then near the password field a message should be displayed "Password must be at least 6 characters"
@@ -27,7 +27,7 @@ Feature: account
   Scenario: input non-matching password and confirm password
     Given I am logged in as sales
     And I select the Account topbar entry
-    Then I should be redirected to a page with the title "Account | Mautic"
+    And I am redirected to a page with the title "Account | Mautic"
     When I set account password to "something" and confirm password to "different"
     And I apply the account changes
     Then near the password field a message should be displayed "Passwords do not match"
@@ -36,7 +36,7 @@ Feature: account
   Scenario Outline: modify display name of a user
     Given I am logged in as sales
     And I select the Account topbar entry
-    Then I should be redirected to a page with the title "Account | Mautic"
+    And I am redirected to a page with the title "Account | Mautic"
     When I set account first name to <first_name>
     And I set account last name to <last_name>
     And I apply the account changes
