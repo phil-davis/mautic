@@ -70,11 +70,31 @@ class AccountContext extends RawMinkContext implements Context
     }
 
     /**
+     * @When I set account password to :pwd and confirm password to :confirm
+     */
+    public function iSetAccountPasswordToConfirmTo($pwd, $confirm)
+    {
+        $this->accountPage->setPassword($pwd);
+        $this->accountPage->setConfirmPassword($confirm);
+    }
+
+    /**
      * @When I apply the account changes
      */
     public function iApplyTheAccountChanges()
     {
         $this->accountPage->applyAccountChanges();
+    }
+
+    /**
+     * @Then near the password field a message should be displayed :message
+     */
+    public function passwordFieldMessage($message)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $message,
+            trim(trim($this->accountPage->getPasswordMessage(), '.'))
+        );
     }
 
     /**

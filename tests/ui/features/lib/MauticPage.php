@@ -47,13 +47,13 @@ class MauticPage extends Page
      * @param string $xpath
      * @param int $timeout_msec
      */
-    public function waitTillElementIsNull ($xpath, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
+    public function waitTillElementIsNull($xpath, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $currentTime = microtime(true);
         $end = $currentTime + ($timeout_msec / 1000);
         while ($currentTime <= $end) {
             try {
-                $element = $this->find("xpath",$xpath);
+                $element = $this->find("xpath", $xpath);
             } catch (WebDriverException $e) {
                 break;
             }
@@ -70,13 +70,13 @@ class MauticPage extends Page
      * @param string $xpath
      * @param int $timeout_msec
      */
-    public function waitTillElementIsNotNull ($xpath, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
+    public function waitTillElementIsNotNull($xpath, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $currentTime = microtime(true);
         $end = $currentTime + ($timeout_msec / 1000);
         while ($currentTime <= $end) {
             try {
-                $element = $this->find("xpath",$xpath);
+                $element = $this->find("xpath", $xpath);
                 if ($element === null || !$element->isValid()) {
                     usleep(STANDARD_SLEEP_TIME_MICROSEC);
                 } else {
@@ -84,8 +84,9 @@ class MauticPage extends Page
                 }
             } catch (WebDriverException $e) {
                 usleep(STANDARD_SLEEP_TIME_MICROSEC);
-                $currentTime = microtime(true);
             }
+
+            $currentTime = microtime(true);
         }
     }
 
