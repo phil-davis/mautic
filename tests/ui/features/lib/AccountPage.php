@@ -33,14 +33,14 @@ class AccountPage extends MauticPage
     protected $applyButtonNormalId = "user_buttons_save_toolbar";
     protected $applyButtonMobileId = "user_buttons_save_toolbar_mobile";
 
-    public function setFirstName($firstname)
+    public function setFirstName($firstName)
     {
-        $this->fillField($this->firstNameInputId, $firstname);
+        $this->fillField($this->firstNameInputId, $firstName);
     }
 
-    public function setLastName($lastname)
+    public function setLastName($lastName)
     {
-        $this->fillField($this->lastNameInputId, $lastname);
+        $this->fillField($this->lastNameInputId, $lastName);
     }
 
     public function selectLanguage($language)
@@ -175,7 +175,7 @@ class AccountPage extends MauticPage
         return $lastNameElement->getValue();
     }
 
-    public function applyAccountChanges()
+    public function applyChanges()
     {
         $applyButton = $this->findById($this->applyButtonNormalId);
 
