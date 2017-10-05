@@ -61,6 +61,16 @@ matrix:
         sauce_connect: true
 
     - php: 7.1
+      env: TC=selenium BROWSER="chrome" BROWSER_VERSION="latest" BEHAT_SUITE="contacts" PLATFORM="Windows 10"
+      addons:
+        sauce_connect: true
+
+    - php: 7.1
       env: TC=selenium BROWSER="firefox" BROWSER_VERSION="47.0" BEHAT_SUITE="basic" PLATFORM="Windows 10"
+      addons:
+        sauce_connect: true
+
+    - php: 7.1
+      env: TC=selenium BROWSER="firefox" BROWSER_VERSION="47.0" BEHAT_SUITE="contacts" PLATFORM="Windows 10"
       addons:
         sauce_connect: true
