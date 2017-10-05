@@ -23,6 +23,10 @@ class AccountPage extends MauticPage
     protected $path = '/s/account';
     protected $firstNameInputId = "user_firstName";
     protected $lastNameInputId = "user_lastName";
+    protected $languageTitleXpath = "//label[@for='user_locale']";
+    protected $languageChosenId = "user_locale_chosen";
+    protected $languageResultsXpath = "//ul[@class='chosen-results']";
+    protected $languageListItemXpath = "//li[contains(text(), '%s')]";
     protected $passwordInputId = "user_plainPassword_password";
     protected $confirmPasswordInputId = "user_plainPassword_confirm";
     protected $passwordMessageXpath = "//*[@id='app-content']//div[@class='help-block']";
@@ -37,6 +41,42 @@ class AccountPage extends MauticPage
     public function setLastName($lastname)
     {
         $this->fillField($this->lastNameInputId, $lastname);
+    }
+
+    public function selectLanguage($language)
+    {
+        // We have to click on the language chosen because that is what is displayed
+        // on top and is clickable.
+        $languageChosenElement = $this->findById($this->languageChosenId);
+
+        if ($languageChosenElement === null) {
+            throw new ElementNotFoundException(
+                "selectLanguage:could not find language chosen element"
+            );
+        }
+
+        $languageChosenElement->click();
+
+        $selectLanguageElement = $languageChosenElement->find('xpath', $this->languageResultsXpath);
+
+        if ($selectLanguageElement === null) {
+            throw new ElementNotFoundException(
+                "selectLanguage:could not find language results element"
+            );
+        }
+
+        $selectOption = $selectLanguageElement->find(
+            'xpath',
+            sprintf($this->languageListItemXpath, $language)
+        );
+
+        if ($selectOption === null) {
+            throw new ElementNotFoundException(
+                "selectLanguage:could not find language list item " . $language
+            );
+        }
+
+        $selectOption->click();
     }
 
     public function setPassword($pwd)
@@ -65,6 +105,40 @@ class AccountPage extends MauticPage
         }
 
         return $passwordMessageElement->getText();
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getLanguageTitle()
+    {
+        $languageTitleElement = $this->find('xpath', $this->languageTitleXpath);
+
+        if ($languageTitleElement === null) {
+            throw new ElementNotFoundException(
+                "getLanguage:could not find language title element"
+            );
+        }
+
+        return $languageTitleElement->getText();
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        $languageChosenElement = $this->findById($this->languageChosenId);
+
+        if ($languageChosenElement === null) {
+            throw new ElementNotFoundException(
+                "getLanguage:could not find language chosen element"
+            );
+        }
+
+        return $languageChosenElement->getText();
     }
 
     /**
