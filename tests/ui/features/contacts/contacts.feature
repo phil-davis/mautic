@@ -9,6 +9,7 @@ Feature: contacts
     When I login with username "admin" and password "mautic" after a redirect from the "newContact" page
     Then I should be redirected to a page with the title "New Contact | Mautic"
 
+  @fixtures
   Scenario Outline: add new contact
     Given I am logged in as sales
     And I go to the contacts page
