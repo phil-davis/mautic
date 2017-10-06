@@ -14,8 +14,7 @@ namespace Page;
 class DashboardPage extends MauticPage
 {
     /**
-     *
-     * @var string $path
+     * @var string
      */
     protected $path = '/s/dashboard';
 }

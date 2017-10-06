@@ -14,8 +14,7 @@ namespace Page;
 class PointTriggersPage extends MauticPage
 {
     /**
-     *
-     * @var string $path
+     * @var string
      */
     protected $path = '/s/points/triggers';
 }

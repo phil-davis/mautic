@@ -11,28 +11,28 @@
 
 namespace Page;
 
-use SensioLabs\Behat\PageObjectExtension\PageObject\Page;
-use Behat\Mink\Session;
 use Behat\Mink\Element\NodeElement;
+use Behat\Mink\Session;
+use SensioLabs\Behat\PageObjectExtension\PageObject\Page;
 use WebDriver\Exception as WebDriverException;
 use WebDriver\Key;
 
 class MauticPage extends Page
 {
-    protected $userNameDisplayId = "expandDisplayName";
+    protected $userNameDisplayId = 'expandDisplayName';
 
     // TODO: sort out waiting for page loads in Mautic
     public function waitTillPageIsLoaded(Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $currentTime = microtime(true);
-        $end = $currentTime + ($timeout_msec / 1000);
+        $end         = $currentTime + ($timeout_msec / 1000);
         while ($currentTime <= $end) {
-            $loadingIndicator = $this->find("css", '.loading');
+            $loadingIndicator = $this->find('css', '.loading');
             if (!is_null($loadingIndicator)) {
                 $visibility = $this->elementHasCSSValue(
                     $loadingIndicator, 'visibility', 'visible'
                 );
-                if ($visibility === FALSE) {
+                if ($visibility === false) {
                     break;
                 }
             }
@@ -43,17 +43,16 @@ class MauticPage extends Page
     }
 
     /**
-     *
      * @param string $xpath
-     * @param int $timeout_msec
+     * @param int    $timeout_msec
      */
     public function waitTillElementIsNull($xpath, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $currentTime = microtime(true);
-        $end = $currentTime + ($timeout_msec / 1000);
+        $end         = $currentTime + ($timeout_msec / 1000);
         while ($currentTime <= $end) {
             try {
-                $element = $this->find("xpath", $xpath);
+                $element = $this->find('xpath', $xpath);
             } catch (WebDriverException $e) {
                 break;
             }
@@ -66,17 +65,16 @@ class MauticPage extends Page
     }
 
     /**
-     *
      * @param string $xpath
-     * @param int $timeout_msec
+     * @param int    $timeout_msec
      */
     public function waitTillElementIsNotNull($xpath, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $currentTime = microtime(true);
-        $end = $currentTime + ($timeout_msec / 1000);
+        $end         = $currentTime + ($timeout_msec / 1000);
         while ($currentTime <= $end) {
             try {
-                $element = $this->find("xpath", $xpath);
+                $element = $this->find('xpath', $xpath);
                 if ($element === null || !$element->isValid()) {
                     usleep(STANDARD_SLEEP_TIME_MICROSEC);
                 } else {
@@ -100,18 +98,20 @@ class MauticPage extends Page
      * rather than trying to find them and close them.
      *
      * @param Element $element
-     * @param string $elementName
-     * @param int $timeout_msec
+     * @param string  $elementName
+     * @param int     $timeout_msec
+     *
      * @throws \Exception
      */
     public function clickWithTimeout(NodeElement $element, $elementName, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $currentTime = microtime(true);
-        $end = $currentTime + ($timeout_msec / 1000);
+        $end         = $currentTime + ($timeout_msec / 1000);
         while ($currentTime <= $end) {
             try {
                 if ($element->isValid() && $element->isVisible()) {
                     $element->click();
+
                     return;
                 } else {
                     usleep(STANDARD_SLEEP_TIME_MICROSEC);
@@ -124,29 +124,30 @@ class MauticPage extends Page
         }
 
         // The timeout expired and we still cannot click
-        throw new \Exception("could not click " . $elementName . " within " . $timeout_msec . "msec");
-
+        throw new \Exception('could not click '.$elementName.' within '.$timeout_msec.'msec');
     }
 
     // TODO: see if notifications come like this in Mautic
     public function getNotificationText()
     {
-        return $this->findById("notification")->getText();
+        return $this->findById('notification')->getText();
     }
 
     public function getNotifications()
     {
-        $notificationsText = array();
-        $notifications = $this->findById("notification");
-        foreach ($notifications->findAll("xpath", "div") as $notification) {
+        $notificationsText = [];
+        $notifications     = $this->findById('notification');
+        foreach ($notifications->findAll('xpath', 'div') as $notification) {
             array_push($notificationsText, $notification->getText());
         }
+
         return $notificationsText;
     }
 
     /**
      * finds the logged-in username displayed in the top right corner
-     * TODO: make something like this work in Mautic
+     * TODO: make something like this work in Mautic.
+     *
      * @return string
      */
     public function getMyUsername()
@@ -155,7 +156,8 @@ class MauticPage extends Page
     }
 
     /**
-     * return the path to the relevant page
+     * return the path to the relevant page.
+     *
      * @return string
      */
     public function getPagePath()
@@ -164,27 +166,29 @@ class MauticPage extends Page
     }
 
     /**
-     * Gets the Coordinates of a Mink Element
+     * Gets the Coordinates of a Mink Element.
      *
-     * @param Session $session
+     * @param Session     $session
      * @param NodeElement $element
-     * @return String
+     *
+     * @return string
      */
     public function getCoordinatesOfElement($session, $element)
     {
         return $session->evaluateScript(
-            'return document.evaluate( "' .
-            $element->getXpath() .
-            '",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)' .
+            'return document.evaluate( "'.
+            $element->getXpath().
+            '",document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)'.
             '.singleNodeValue.getBoundingClientRect();'
         );
     }
 
     /**
-     * Gets the Window Height
+     * Gets the Window Height.
      *
      * @param Session $session
-     * @return String
+     *
+     * @return string
      */
     public function getWindowHeight($session)
     {
@@ -194,19 +198,21 @@ class MauticPage extends Page
     }
 
     /**
-     * waits till all ajax calls are finished (jQuery.active === 0)
+     * waits till all ajax calls are finished (jQuery.active === 0).
+     *
      * @param Session $session
-     * @param number $timeout_msec
+     * @param number  $timeout_msec
+     *
      * @throws \Exception
      */
     public function waitForOutstandingAjaxCalls(Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $timeout_msec = (int) $timeout_msec;
         if ($timeout_msec <= 0) {
-            throw new \InvalidArgumentException("negative or zero timeout");
+            throw new \InvalidArgumentException('negative or zero timeout');
         }
         $currentTime = microtime(true);
-        $end = $currentTime + ($timeout_msec / 1000);
+        $end         = $currentTime + ($timeout_msec / 1000);
         while ($currentTime <= $end) {
             try {
                 $waitingResult = $session->wait(
@@ -218,34 +224,35 @@ class MauticPage extends Page
                 }
             } catch (\Exception $e) {
                 //show Exception message, but do not throw it
-                echo $e->getMessage(). "\n";
+                echo $e->getMessage()."\n";
             } finally {
                 usleep(STANDARD_SLEEP_TIME_MICROSEC);
                 $currentTime = microtime(true);
             }
         }
         if ($currentTime > $end) {
-            $message = "INFORMATION: timed out waiting for outstanding ajax calls";
+            $message = 'INFORMATION: timed out waiting for outstanding ajax calls';
             echo $message;
             error_log($message);
         }
     }
 
     /**
-     * waits till at least one Ajax call is active
+     * waits till at least one Ajax call is active.
+     *
      * @param Session $session
-     * @param int $timeout_msec
+     * @param int     $timeout_msec
      */
     public function waitForAjaxCallsToStart(Session $session, $timeout_msec = 1000)
     {
         $timeout_msec = (int) $timeout_msec;
         if ($timeout_msec <= 0) {
-            throw new \InvalidArgumentException("negative or zero timeout");
+            throw new \InvalidArgumentException('negative or zero timeout');
         }
         $currentTime = microtime(true);
-        $end = $currentTime + ($timeout_msec / 1000);
+        $end         = $currentTime + ($timeout_msec / 1000);
         while ($currentTime <= $end) {
-            if ((int) $session->evaluateScript("jQuery.active") > 0) {
+            if ((int) $session->evaluateScript('jQuery.active') > 0) {
                 break;
             }
             usleep(STANDARD_SLEEP_TIME_MICROSEC);
@@ -254,15 +261,16 @@ class MauticPage extends Page
     }
 
     /**
-     * waits till at least one Ajax call is active and then waits till all outstanding ajax calls finish
+     * waits till at least one Ajax call is active and then waits till all outstanding ajax calls finish.
+     *
      * @param Session $session
-     * @param int $timeout_msec
+     * @param int     $timeout_msec
      */
     public function waitForAjaxCallsToStartAndFinish(Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $start = microtime(true);
         $this->waitForAjaxCallsToStart($session);
-        $end = microtime(true);
+        $end          = microtime(true);
         $timeout_msec = $timeout_msec - (($end - $start) * 1000);
         $this->waitForOutstandingAjaxCalls($session, $timeout_msec);
     }
@@ -272,20 +280,20 @@ class MauticPage extends Page
      * css rule attribute value.
      *
      * @param NodeElement $element
-     *   NodeElement previously selected with
-     *   $this->getSession()->getPage()->find().
-     * @param string $property
-     *   Name of the CSS property, such as "visibility".
-     * @param string $value
-     *   Value of the specified rule, such as "hidden".
+     *                              NodeElement previously selected with
+     *                              $this->getSession()->getPage()->find()
+     * @param string      $property
+     *                              Name of the CSS property, such as "visibility"
+     * @param string      $value
+     *                              Value of the specified rule, such as "hidden"
      *
      * @return NodeElement|bool
-     *   The NodeElement selected if true, FALSE otherwise.
+     *                          The NodeElement selected if true, FALSE otherwise
      */
     protected function elementHasCSSValue($element, $property, $value)
     {
-        $exists = FALSE;
-        $style = $element->getAttribute('style');
+        $exists = false;
+        $style  = $element->getAttribute('style');
         if ($style) {
             if (preg_match(
                 "/(^{$property}:|; {$property}:) ([a-z0-9]+);/i",
@@ -305,23 +313,24 @@ class MauticPage extends Page
      * sends an END key and then BACKSPACEs to delete the current value
      * then sends the new value
      * checks the set value and sends the Escape key + throws an exception
-     * if the value is not set correctly
+     * if the value is not set correctly.
      *
      * @param NodeElement $inputField
-     * @param string $value
+     * @param string      $value
+     *
      * @throws \Exception
      */
     protected function cleanInputAndSetValue(NodeElement $inputField, $value)
     {
-        $resultValue = $inputField->getValue();
+        $resultValue         = $inputField->getValue();
         $existingValueLength = strlen($resultValue);
-        $deleteSequence = Key::END . str_repeat(Key::BACKSPACE, $existingValueLength);
+        $deleteSequence      = Key::END.str_repeat(Key::BACKSPACE, $existingValueLength);
         $inputField->setValue($deleteSequence);
         $inputField->setValue($value);
         $resultValue = $inputField->getValue();
         if ($resultValue !== $value) {
             $inputField->keyUp(27); //send escape
-            throw new \Exception("value of input field is not what we expect");
+            throw new \Exception('value of input field is not what we expect');
         }
     }
 }

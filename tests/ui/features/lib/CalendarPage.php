@@ -14,8 +14,7 @@ namespace Page;
 class CalendarPage extends MauticPage
 {
     /**
-     *
-     * @var string $path
+     * @var string
      */
     protected $path = '/s/calendar';
 }
