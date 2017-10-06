@@ -12,8 +12,8 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\MinkExtension\Context\RawMinkContext;
-use Page\MauticPage;
 use Page\LoginPage;
+use Page\MauticPage;
 
 require_once 'bootstrap.php';
 
@@ -30,7 +30,7 @@ class FeatureContext extends RawMinkContext implements Context
     public function __construct(MauticPage $mauticPage, LoginPage $loginPage)
     {
         $this->mauticPage = $mauticPage;
-        $this->loginPage = $loginPage;
+        $this->loginPage  = $loginPage;
     }
 
     /**
@@ -59,7 +59,7 @@ class FeatureContext extends RawMinkContext implements Context
         $actualTitle = $this->getSession()->getPage()->find(
             'xpath', './/title'
         )->getHtml();
-        $normalizedTitle = preg_replace('/\s+/', ' ',trim($actualTitle));
+        $normalizedTitle = preg_replace('/\s+/', ' ', trim($actualTitle));
         PHPUnit_Framework_Assert::assertEquals($title, $normalizedTitle);
     }
 
@@ -67,14 +67,15 @@ class FeatureContext extends RawMinkContext implements Context
     public function setUpSuite(BeforeScenarioScope $scope)
     {
         $jobId = $this->getSessionId($scope);
-        file_put_contents("/tmp/saucelabs_sessionid", $jobId);
+        file_put_contents('/tmp/saucelabs_sessionid', $jobId);
     }
 
     public function getSessionId(BeforeScenarioScope $scope)
     {
-        $url = $this->getSession()->getDriver()->getWebDriverSession()->getUrl();
-        $parts = explode('/', $url);
+        $url       = $this->getSession()->getDriver()->getWebDriverSession()->getUrl();
+        $parts     = explode('/', $url);
         $sessionId = array_pop($parts);
+
         return $sessionId;
     }
 }

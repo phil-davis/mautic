@@ -14,8 +14,7 @@ namespace Page;
 class CustomFieldsPage extends MauticPage
 {
     /**
-     *
-     * @var string $path
+     * @var string
      */
     protected $path = '/s/contacts/fields';
 }

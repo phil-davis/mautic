@@ -5,7 +5,8 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->in(__DIR__.'/app/config')
     ->in(__DIR__.'/app/middlewares')
     ->in(__DIR__.'/app/migrations')
-    ->in(__DIR__.'/plugins');
+    ->in(__DIR__.'/plugins')
+    ->in(__DIR__.'/tests');
 
 return Symfony\CS\Config\Config::create()
     ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)

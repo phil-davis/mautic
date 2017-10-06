@@ -9,8 +9,8 @@
  * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\TableNode;
 use TestHelpers\SetupHelper;
 
@@ -27,14 +27,15 @@ trait BasicStructure
     private $salesPassword;
     private $regularUserPassword;
     private $regularUserName;
-    private $regularUserNames = array();
+    private $regularUserNames = [];
     /**
      * list of users that were created during test runs
-     * key is the username value is an array of user attributes
+     * key is the username value is an array of user attributes.
+     *
      * @var array
      */
-    private $createdUsers = array();
-    private $mauticPath = null;
+    private $createdUsers = [];
+    private $mauticPath   = null;
 
     /**
      * @Given I am logged in as admin
@@ -111,11 +112,13 @@ trait BasicStructure
 
     /**
      * creates a single user
-     * TODO: make something like this work with Mautic
+     * TODO: make something like this work with Mautic.
+     *
      * @param string $user
      * @param string $password
      * @param string $displayName
      * @param string $email
+     *
      * @throws Exception
      */
     private function createUser(
@@ -124,17 +127,17 @@ trait BasicStructure
         $displayName = null,
         $email = null
     ) {
-        $user = trim($user);
+        $user   = trim($user);
         $result = SetupHelper::createUser(
             $this->mauticPath, $user, $password, $displayName, $email
         );
-        if ($result["code"] != 0) {
-            throw new Exception("could not create user. " . $result["stdOut"] . " " . $result["stdErr"]);
+        if ($result['code'] != 0) {
+            throw new Exception('could not create user. '.$result['stdOut'].' '.$result['stdErr']);
         }
         $this->createdUsers [$user] = [
-            "password" => $password,
-            "displayname" => $displayName,
-            "email" => $email
+            'password'    => $password,
+            'displayname' => $displayName,
+            'email'       => $email,
         ];
     }
 
@@ -143,15 +146,15 @@ trait BasicStructure
      */
     public function setUpScenarioGetRegularUsers(BeforeScenarioScope $scope)
     {
-        $suiteParameters = $scope->getEnvironment()->getSuite()->getSettings() ['context'] ['parameters'];
-        $this->adminUsername = (string)$suiteParameters['adminUsername'];
-        $this->adminPassword = (string)$suiteParameters['adminPassword'];
-        $this->salesUsername = (string)$suiteParameters['salesUsername'];
-        $this->salesPassword = (string)$suiteParameters['salesPassword'];
-        $this->regularUserNames = explode(",", $suiteParameters['regularUserNames']);
-        $this->regularUserName = (string)$suiteParameters['regularUserName'];
-        $this->regularUserPassword = (string)$suiteParameters['regularUserPassword'];
-        $this->mauticPath = rtrim($suiteParameters['mauticPath'], '/') . '/';
+        $suiteParameters           = $scope->getEnvironment()->getSuite()->getSettings() ['context'] ['parameters'];
+        $this->adminUsername       = (string) $suiteParameters['adminUsername'];
+        $this->adminPassword       = (string) $suiteParameters['adminPassword'];
+        $this->salesUsername       = (string) $suiteParameters['salesUsername'];
+        $this->salesPassword       = (string) $suiteParameters['salesPassword'];
+        $this->regularUserNames    = explode(',', $suiteParameters['regularUserNames']);
+        $this->regularUserName     = (string) $suiteParameters['regularUserName'];
+        $this->regularUserPassword = (string) $suiteParameters['regularUserPassword'];
+        $this->mauticPath          = rtrim($suiteParameters['mauticPath'], '/').'/';
     }
 
     /**
@@ -169,8 +172,8 @@ trait BasicStructure
     {
         foreach ($this->getCreatedUserNames() as $user) {
             $result = SetupHelper::deleteUser($this->mauticPath, $user);
-            if ($result["code"] != 0) {
-                throw new Exception("could not delete user. " . $result["stdOut"] . " " . $result["stdErr"]);
+            if ($result['code'] != 0) {
+                throw new Exception('could not delete user. '.$result['stdOut'].' '.$result['stdErr']);
             }
         }
     }
@@ -196,8 +199,8 @@ trait BasicStructure
     }
 
     /**
-     *
      * @param string $username
+     *
      * @return string password
      */
     public function getUserPassword($username)
@@ -218,39 +221,42 @@ trait BasicStructure
 
     /**
      * substitutes codes like %base_url% with the value
-     * if the given values does not have anything to be substituted its returned unmodified
+     * if the given values does not have anything to be substituted its returned unmodified.
+     *
      * @param string $value
+     *
      * @return string
      */
     public function substituteInLineCodes($value)
     {
         $substitutions = [
             [
-                "code" => "%base_url%",
-                "function" => [
+                'code'     => '%base_url%',
+                'function' => [
                     $this,
-                    "getMinkParameter"
+                    'getMinkParameter',
                 ],
-                "parameter" => [
-                    "base_url"
-                ]
+                'parameter' => [
+                    'base_url',
+                ],
             ],
             [
-                "code" => "%regularuser%",
-                "function" => [
+                'code'     => '%regularuser%',
+                'function' => [
                     $this,
-                    "getRegularUserName"
+                    'getRegularUserName',
                 ],
-                "parameter" => [ ]
-            ]
+                'parameter' => [],
+            ],
         ];
         foreach ($substitutions as $substitution) {
             $value = str_replace(
-                $substitution["code"],
-                call_user_func_array($substitution["function"], $substitution["parameter"]),
+                $substitution['code'],
+                call_user_func_array($substitution['function'], $substitution['parameter']),
                 $value
             );
         }
+
         return $value;
     }
 }
