@@ -17,54 +17,55 @@ use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\ElementNotFoundExc
 class NavTopbarPage extends MauticPage
 {
     /**
-     * @var string $path
+     * @var string
      */
     protected $path = '/s/login';
 
-    protected $navTopbarDropdownXpath = "//*[@id='app-header']//a[@class='dropdown-toggle']";
-    protected $navTopbarFullNameXpath = "//span[contains(@class,'text')]";
-    protected $navTopbarDropdownMenuXpath = "//*[@id='app-header']//*[@class='dropdown-menu dropdown-menu-right']";
+    protected $navTopbarDropdownXpath          = "//*[@id='app-header']//a[@class='dropdown-toggle']";
+    protected $navTopbarFullNameXpath          = "//span[contains(@class,'text')]";
+    protected $navTopbarDropdownMenuXpath      = "//*[@id='app-header']//*[@class='dropdown-menu dropdown-menu-right']";
     protected $navTopbarDropdownMenuMatchXpath = "//*[@href='%s']";
-    protected $navTopbarSettingsXpath = "//*[@id='app-header']//a[@data-toggle='sidebar']//i[contains(@class,'fa-cog')]";
+    protected $navTopbarSettingsXpath          = "//*[@id='app-header']//a[@data-toggle='sidebar']//i[contains(@class,'fa-cog')]";
 
     protected $navTopbarMenuHref = [
         'account' => '/s/account',
-        'logout' => '/s/logout',
+        'logout'  => '/s/logout',
     ];
 
     protected $navTopbarMenuPages = [
         'account' => 'AccountPage',
-        'logout' => 'LoginPage',
+        'logout'  => 'LoginPage',
     ];
 
     protected $navSettingsPanelIds = [
-        'webhooks' => 'mautic_webhook_root',
-        'users' => 'mautic_user_index',
-        'themes' => 'mautic_themes_index',
-        'system info' => 'mautic_sysinfo_index',
-        'categories' => 'mautic_category_index',
+        'webhooks'      => 'mautic_webhook_root',
+        'users'         => 'mautic_user_index',
+        'themes'        => 'mautic_themes_index',
+        'system info'   => 'mautic_sysinfo_index',
+        'categories'    => 'mautic_category_index',
         'configuration' => 'mautic_config_index',
-        'roles' => 'mautic_role_index',
+        'roles'         => 'mautic_role_index',
         'custom fields' => 'mautic_lead_field',
-        'plugins' => 'mautic_plugin_root',
+        'plugins'       => 'mautic_plugin_root',
     ];
 
     protected $navSettingsPanelPages = [
-        'webhooks' => 'WebhooksPage',
-        'users' => 'UsersPage',
-        'themes' => 'ThemesPage',
-        'system info' => 'SystemInfoPage',
-        'categories' => 'CategoriesPage',
+        'webhooks'      => 'WebhooksPage',
+        'users'         => 'UsersPage',
+        'themes'        => 'ThemesPage',
+        'system info'   => 'SystemInfoPage',
+        'categories'    => 'CategoriesPage',
         'configuration' => 'ConfigurationPage',
-        'roles' => 'RolesPage',
+        'roles'         => 'RolesPage',
         'custom fields' => 'CustomFieldsPage',
-        'plugins' => 'PluginsPage',
+        'plugins'       => 'PluginsPage',
     ];
 
     /**
      * Find and click the entry in the topbar dropdown menu.
      *
      * @param $entry
+     *
      * @return \SensioLabs\Behat\PageObjectExtension\PageObject\Page
      */
     public function selectNavTopbarMenuEntry($entry)
@@ -73,7 +74,7 @@ class NavTopbarPage extends MauticPage
 
         if (!array_key_exists($entry, $this->navTopbarMenuHref)) {
             throw new InvalidArgumentException(
-                "selectNavTopbarEntry:no such nav topbar menu entry " . $entry
+                'selectNavTopbarEntry:no such nav topbar menu entry '.$entry
             );
         }
 
@@ -81,17 +82,17 @@ class NavTopbarPage extends MauticPage
 
         if ($dropdownElement === null) {
             throw new ElementNotFoundException(
-                "selectNavTopbarEntry:could not find nav topbar dropdown element"
+                'selectNavTopbarEntry:could not find nav topbar dropdown element'
             );
         }
 
-        $this->clickWithTimeout($dropdownElement, "nav topbar dropdown element");
+        $this->clickWithTimeout($dropdownElement, 'nav topbar dropdown element');
 
         $dropdownMenuElement = $this->find('xpath', $this->navTopbarDropdownMenuXpath);
 
         if ($dropdownMenuElement === null) {
             throw new ElementNotFoundException(
-                "selectNavTopbarEntry:could not find nav topbar dropdown menu element"
+                'selectNavTopbarEntry:could not find nav topbar dropdown menu element'
             );
         }
 
@@ -102,17 +103,17 @@ class NavTopbarPage extends MauticPage
 
         if ($dropdownMenuItemElement === null) {
             throw new ElementNotFoundException(
-                "selectNavTopbarEntry:could not find nav topbar dropdown menu item " . $entry
+                'selectNavTopbarEntry:could not find nav topbar dropdown menu item '.$entry
             );
         }
 
-        $this->clickWithTimeout($dropdownMenuItemElement, "nav topbar dropdown menu item " . $entry);
+        $this->clickWithTimeout($dropdownMenuItemElement, 'nav topbar dropdown menu item '.$entry);
 
         return $this->getPage($this->navTopbarMenuPages[$entry]);
     }
 
     /**
-     * Get the text in the topbar dropdown (which has the user display name)
+     * Get the text in the topbar dropdown (which has the user display name).
      *
      * @return string
      */
@@ -122,7 +123,7 @@ class NavTopbarPage extends MauticPage
 
         if ($dropdownElement === null) {
             throw new ElementNotFoundException(
-                "getNavTopbarText:could not find nav topbar dropdown element"
+                'getNavTopbarText:could not find nav topbar dropdown element'
             );
         }
 
@@ -130,7 +131,7 @@ class NavTopbarPage extends MauticPage
 
         if ($fullNameElement === null) {
             throw new ElementNotFoundException(
-                "getNavTopbarText:could not find nav topbar fullname element"
+                'getNavTopbarText:could not find nav topbar fullname element'
             );
         }
 
@@ -138,9 +139,7 @@ class NavTopbarPage extends MauticPage
     }
 
     /**
-     * Open/close the settings panel
-     *
-     * @return void
+     * Open/close the settings panel.
      */
     public function clickTheSettingsGear()
     {
@@ -148,7 +147,7 @@ class NavTopbarPage extends MauticPage
 
         if ($settingsElement === null) {
             throw new ElementNotFoundException(
-                "clickTheSettingsGear:could not find nav topbar settings gear element"
+                'clickTheSettingsGear:could not find nav topbar settings gear element'
             );
         }
 
@@ -157,6 +156,7 @@ class NavTopbarPage extends MauticPage
 
     /**
      * @param $entry
+     *
      * @return \SensioLabs\Behat\PageObjectExtension\PageObject\Page
      */
     public function selectSettingsPanelEntry($entry)
@@ -164,14 +164,14 @@ class NavTopbarPage extends MauticPage
         $entry = strtolower($entry);
 
         if (!array_key_exists($entry, $this->navSettingsPanelIds)) {
-            throw new InvalidArgumentException("no such settings panel entry " . $entry);
+            throw new InvalidArgumentException('no such settings panel entry '.$entry);
         }
 
-        $entryId = $this->navSettingsPanelIds[$entry];
+        $entryId              = $this->navSettingsPanelIds[$entry];
         $settingsPanelElement = $this->findById($entryId);
 
         if ($settingsPanelElement === null) {
-            throw new ElementNotFoundException("could not find settings panel element " . $entryId);
+            throw new ElementNotFoundException('could not find settings panel element '.$entryId);
         }
 
         $settingsPanelElement->click();

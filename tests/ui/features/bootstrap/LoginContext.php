@@ -62,7 +62,7 @@ class LoginContext extends RawMinkContext implements Context
      */
     public function iLoginWithUsernameAndPasswordAfterRedirectFromThePage($username, $password, $page)
     {
-        $this->expectedPage = $this->loginPage->loginAs($username, $password, str_replace(' ', '', ucwords($page)) . 'Page');
+        $this->expectedPage = $this->loginPage->loginAs($username, $password, str_replace(' ', '', ucwords($page)).'Page');
         $this->expectedPage->waitTillPageIsLoaded($this->getSession());
     }
 

@@ -11,30 +11,31 @@
 
 namespace Page;
 
-use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\ElementNotFoundException;
 use Behat\Mink\Session;
+use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\ElementNotFoundException;
 
 class LoginPage extends MauticPage
 {
     /**
-     * @var string $path
+     * @var string
      */
-    protected $path = '/s/login';
-    protected $userInputId = "username";
-    protected $passwordInputId = "password";
+    protected $path              = '/s/login';
+    protected $userInputId       = 'username';
+    protected $passwordInputId   = 'password';
     protected $submitButtonXpath = "//button[@type='submit']";
 
     public function loginAs($username, $password, $target = 'DashboardPage')
     {
         $this->fillField($this->userInputId, $username);
         $this->fillField($this->passwordInputId, $password);
-        $loginButton = $this->find("xpath", $this->submitButtonXpath);
+        $loginButton = $this->find('xpath', $this->submitButtonXpath);
 
         if ($loginButton === null) {
-            throw new ElementNotFoundException("could not find login button");
+            throw new ElementNotFoundException('could not find login button');
         }
 
         $loginButton->click();
+
         return $this->getPage($target);
     }
 
@@ -44,7 +45,7 @@ class LoginPage extends MauticPage
     public function waitTillPageIsLoaded(Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $currentTime = microtime(true);
-        $end = $currentTime + ($timeout_msec / 1000);
+        $end         = $currentTime + ($timeout_msec / 1000);
         while ($currentTime <= $end) {
             if (($this->findById($this->userInputId) !== null) &&
                 ($this->findById($this->passwordInputId) !== null)) {

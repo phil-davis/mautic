@@ -14,8 +14,7 @@ namespace Page;
 class ReportsPage extends MauticPage
 {
     /**
-     *
-     * @var string $path
+     * @var string
      */
     protected $path = '/s/reports';
 }
