@@ -17,21 +17,20 @@ use WebDriver\Exception\ElementNotVisible;
 class AccountPage extends MauticPage
 {
     /**
-     *
-     * @var string $path
+     * @var string
      */
-    protected $path = '/s/account';
-    protected $firstNameInputId = "user_firstName";
-    protected $lastNameInputId = "user_lastName";
-    protected $languageTitleXpath = "//label[@for='user_locale']";
-    protected $languageChosenId = "user_locale_chosen";
-    protected $languageResultsXpath = "//ul[@class='chosen-results']";
-    protected $languageListItemXpath = "//li[contains(text(), '%s')]";
-    protected $passwordInputId = "user_plainPassword_password";
-    protected $confirmPasswordInputId = "user_plainPassword_confirm";
-    protected $passwordMessageXpath = "//*[@id='app-content']//div[@class='help-block']";
-    protected $applyButtonNormalId = "user_buttons_save_toolbar";
-    protected $applyButtonMobileId = "user_buttons_save_toolbar_mobile";
+    protected $path                   = '/s/account';
+    protected $firstNameInputId       = 'user_firstName';
+    protected $lastNameInputId        = 'user_lastName';
+    protected $languageTitleXpath     = "//label[@for='user_locale']";
+    protected $languageChosenId       = 'user_locale_chosen';
+    protected $languageResultsXpath   = "//ul[@class='chosen-results']";
+    protected $languageListItemXpath  = "//li[contains(text(), '%s')]";
+    protected $passwordInputId        = 'user_plainPassword_password';
+    protected $confirmPasswordInputId = 'user_plainPassword_confirm';
+    protected $passwordMessageXpath   = "//*[@id='app-content']//div[@class='help-block']";
+    protected $applyButtonNormalId    = 'user_buttons_save_toolbar';
+    protected $applyButtonMobileId    = 'user_buttons_save_toolbar_mobile';
 
     public function setFirstName($firstName)
     {
@@ -51,7 +50,7 @@ class AccountPage extends MauticPage
 
         if ($languageChosenElement === null) {
             throw new ElementNotFoundException(
-                "selectLanguage:could not find language chosen element"
+                'selectLanguage:could not find language chosen element'
             );
         }
 
@@ -61,7 +60,7 @@ class AccountPage extends MauticPage
 
         if ($selectLanguageElement === null) {
             throw new ElementNotFoundException(
-                "selectLanguage:could not find language results element"
+                'selectLanguage:could not find language results element'
             );
         }
 
@@ -72,7 +71,7 @@ class AccountPage extends MauticPage
 
         if ($selectOption === null) {
             throw new ElementNotFoundException(
-                "selectLanguage:could not find language list item " . $language
+                'selectLanguage:could not find language list item '.$language
             );
         }
 
@@ -90,7 +89,6 @@ class AccountPage extends MauticPage
     }
 
     /**
-     *
      * @return string
      */
     public function getPasswordMessage()
@@ -100,7 +98,7 @@ class AccountPage extends MauticPage
 
         if ($passwordMessageElement === null) {
             throw new ElementNotFoundException(
-                "getPasswordMessage:could not find password message element"
+                'getPasswordMessage:could not find password message element'
             );
         }
 
@@ -108,7 +106,6 @@ class AccountPage extends MauticPage
     }
 
     /**
-     *
      * @return string
      */
     public function getLanguageTitle()
@@ -117,7 +114,7 @@ class AccountPage extends MauticPage
 
         if ($languageTitleElement === null) {
             throw new ElementNotFoundException(
-                "getLanguage:could not find language title element"
+                'getLanguage:could not find language title element'
             );
         }
 
@@ -125,7 +122,6 @@ class AccountPage extends MauticPage
     }
 
     /**
-     *
      * @return string
      */
     public function getLanguage()
@@ -134,7 +130,7 @@ class AccountPage extends MauticPage
 
         if ($languageChosenElement === null) {
             throw new ElementNotFoundException(
-                "getLanguage:could not find language chosen element"
+                'getLanguage:could not find language chosen element'
             );
         }
 
@@ -142,7 +138,6 @@ class AccountPage extends MauticPage
     }
 
     /**
-     *
      * @return string
      */
     public function getFirstName()
@@ -151,7 +146,7 @@ class AccountPage extends MauticPage
 
         if ($firstNameElement === null) {
             throw new ElementNotFoundException(
-                "getFirstName:could not find element"
+                'getFirstName:could not find element'
             );
         }
 
@@ -159,7 +154,6 @@ class AccountPage extends MauticPage
     }
 
     /**
-     *
      * @return string
      */
     public function getLastName()
@@ -168,7 +162,7 @@ class AccountPage extends MauticPage
 
         if ($lastNameElement === null) {
             throw new ElementNotFoundException(
-                "getLastName:could not find element"
+                'getLastName:could not find element'
             );
         }
 
@@ -180,19 +174,19 @@ class AccountPage extends MauticPage
         $applyButton = $this->findById($this->applyButtonNormalId);
 
         if ($applyButton === null) {
-            throw new ElementNotFoundException("could not find normal account apply button");
+            throw new ElementNotFoundException('could not find normal account apply button');
         }
 
         if (!$applyButton->isVisible()) {
             $applyButton = $this->findById($this->applyButtonMobileId);
 
             if ($applyButton === null) {
-                throw new ElementNotFoundException("could not find mobile account apply button");
+                throw new ElementNotFoundException('could not find mobile account apply button');
             }
         }
 
         if (!$applyButton->isVisible()) {
-            throw new ElementNotVisible("could not find any visible account apply button");
+            throw new ElementNotVisible('could not find any visible account apply button');
         }
 
         $applyButton->click();

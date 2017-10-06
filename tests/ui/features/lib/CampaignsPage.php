@@ -14,8 +14,7 @@ namespace Page;
 class CampaignsPage extends MauticPage
 {
     /**
-     *
-     * @var string $path
+     * @var string
      */
     protected $path = '/s/campaigns';
 }

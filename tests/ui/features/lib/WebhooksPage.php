@@ -14,8 +14,7 @@ namespace Page;
 class WebhooksPage extends MauticPage
 {
     /**
-     *
-     * @var string $path
+     * @var string
      */
     protected $path = '/s/webhooks/1';
 }

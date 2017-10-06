@@ -16,10 +16,9 @@ use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\ElementNotFoundExc
 class ContactsPage extends MauticPage
 {
     /**
-     *
-     * @var string $path
+     * @var string
      */
-    protected $path = '/s/contacts';
+    protected $path                  = '/s/contacts';
     protected $newContactButtonXpath = '//*[@href=\'/s/contacts/new\']';
 
     /**
@@ -31,7 +30,7 @@ class ContactsPage extends MauticPage
 
         if ($newContactElement === null) {
             throw new ElementNotFoundException(
-                "selectNewContactButton:could not find new contact button"
+                'selectNewContactButton:could not find new contact button'
             );
         }
 
