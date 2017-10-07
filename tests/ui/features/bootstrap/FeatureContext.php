@@ -10,7 +10,6 @@
  */
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Page\LoginPage;
 use Page\MauticPage;
@@ -27,6 +26,12 @@ class FeatureContext extends RawMinkContext implements Context
     private $mauticPage;
     private $loginPage;
 
+    /**
+     * FeatureContext constructor.
+     *
+     * @param MauticPage $mauticPage
+     * @param LoginPage  $loginPage
+     */
     public function __construct(MauticPage $mauticPage, LoginPage $loginPage)
     {
         $this->mauticPage = $mauticPage;
@@ -63,14 +68,16 @@ class FeatureContext extends RawMinkContext implements Context
         PHPUnit_Framework_Assert::assertEquals($title, $normalizedTitle);
     }
 
-    /** @BeforeScenario */
-    public function setUpSuite(BeforeScenarioScope $scope)
+    /**
+     * @BeforeScenario
+     */
+    public function setUpSuite()
     {
-        $jobId = $this->getSessionId($scope);
+        $jobId = $this->getSessionId();
         file_put_contents('/tmp/saucelabs_sessionid', $jobId);
     }
 
-    public function getSessionId(BeforeScenarioScope $scope)
+    public function getSessionId()
     {
         $url       = $this->getSession()->getDriver()->getWebDriverSession()->getUrl();
         $parts     = explode('/', $url);

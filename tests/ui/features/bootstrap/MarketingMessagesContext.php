@@ -22,6 +22,11 @@ class MarketingMessagesContext extends RawMinkContext implements Context
 {
     private $MarketingMessagesPage;
 
+    /**
+     * MarketingMessagesContext constructor.
+     *
+     * @param MarketingMessagesPage $page
+     */
     public function __construct(MarketingMessagesPage $page)
     {
         $this->MarketingMessagesPage = $page;

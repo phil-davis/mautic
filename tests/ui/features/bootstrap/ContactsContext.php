@@ -22,6 +22,11 @@ class ContactsContext extends RawMinkContext implements Context
 {
     private $contactsPage;
 
+    /**
+     * ContactsContext constructor.
+     *
+     * @param ContactsPage $page
+     */
     public function __construct(ContactsPage $page)
     {
         $this->contactsPage = $page;

@@ -26,6 +26,11 @@ class LoginContext extends RawMinkContext implements Context
     private $expectedPage;
     private $featureContext;
 
+    /**
+     * LoginContext constructor.
+     *
+     * @param LoginPage $page
+     */
     public function __construct(LoginPage $page)
     {
         $this->loginPage = $page;

@@ -22,6 +22,11 @@ class FocusItemsContext extends RawMinkContext implements Context
 {
     private $focusItemsPage;
 
+    /**
+     * FocusItemsContext constructor.
+     *
+     * @param FocusItemsPage $page
+     */
     public function __construct(FocusItemsPage $page)
     {
         $this->focusItemsPage = $page;

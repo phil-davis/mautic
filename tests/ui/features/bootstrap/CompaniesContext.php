@@ -22,6 +22,11 @@ class CompaniesContext extends RawMinkContext implements Context
 {
     private $companiesPage;
 
+    /**
+     * CompaniesContext constructor.
+     *
+     * @param CompaniesPage $page
+     */
     public function __construct(CompaniesPage $page)
     {
         $this->companiesPage = $page;

@@ -22,6 +22,11 @@ class AssetsContext extends RawMinkContext implements Context
 {
     private $assetsPage;
 
+    /**
+     * AssetsContext constructor.
+     *
+     * @param AssetsPage $page
+     */
     public function __construct(AssetsPage $page)
     {
         $this->assetsPage = $page;

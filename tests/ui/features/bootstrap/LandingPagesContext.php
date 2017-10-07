@@ -22,6 +22,11 @@ class LandingPagesContext extends RawMinkContext implements Context
 {
     private $landingPagesPage;
 
+    /**
+     * LandingPagesContext constructor.
+     *
+     * @param LandingPagesPage $page
+     */
     public function __construct(LandingPagesPage $page)
     {
         $this->landingPagesPage = $page;

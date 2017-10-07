@@ -22,6 +22,11 @@ class AccountContext extends RawMinkContext implements Context
 {
     private $accountPage;
 
+    /**
+     * AccountContext constructor.
+     *
+     * @param AccountPage $page
+     */
     public function __construct(AccountPage $page)
     {
         $this->accountPage = $page;

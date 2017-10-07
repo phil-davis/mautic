@@ -22,6 +22,11 @@ class CampaignsContext extends RawMinkContext implements Context
 {
     private $campaignsPage;
 
+    /**
+     * CampaignsContext constructor.
+     *
+     * @param CampaignsPage $page
+     */
     public function __construct(CampaignsPage $page)
     {
         $this->campaignsPage = $page;
