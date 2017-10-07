@@ -1,7 +1,7 @@
 Feature: account
   In order to identify myself within Mautic
   As an authorised user
-  I want to be able to supply details for my user
+  I want to be able to supply details for my account and reset my password
 
   @fixtures
   Scenario: change passwword
@@ -24,7 +24,7 @@ Feature: account
     And I apply the account changes
     Then near the password field a message should be displayed "Password must be at least 6 characters"
 
-  Scenario: input non-matching password and confirm password
+  Scenario: input non-matching passwords
     Given I am logged in as sales
     And I select the Account topbar entry
     And I am redirected to a page with the title "Account | Mautic"

@@ -22,6 +22,11 @@ class DashboardContext extends RawMinkContext implements Context
 {
     private $dashboardPage;
 
+    /**
+     * DashboardContext constructor.
+     *
+     * @param DashboardPage $page
+     */
     public function __construct(DashboardPage $page)
     {
         $this->dashboardPage = $page;

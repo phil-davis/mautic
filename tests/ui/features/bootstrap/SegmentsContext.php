@@ -22,6 +22,11 @@ class SegmentsContext extends RawMinkContext implements Context
 {
     private $segmentsPage;
 
+    /**
+     * SegmentsContext constructor.
+     *
+     * @param SegmentsPage $page
+     */
     public function __construct(SegmentsPage $page)
     {
         $this->segmentsPage = $page;

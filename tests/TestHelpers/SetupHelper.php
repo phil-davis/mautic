@@ -62,7 +62,7 @@ class SetupHelper
     }
 
     /**
-     * @param string $ocPath
+     * @param string $mauticPath
      * @param string $userName
      * @param string $app
      * @param string $key
@@ -100,7 +100,7 @@ class SetupHelper
      * @param array  $args       anything behind "app/console".
      *                           For example: "user:add"
      * @param string $mauticPath
-     * @param string $escaping
+     * @param bool   $escaping
      *
      * @return string[] associated array with "code", "stdOut", "stdErr"
      */

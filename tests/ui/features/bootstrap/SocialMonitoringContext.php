@@ -22,6 +22,11 @@ class SocialMonitoringContext extends RawMinkContext implements Context
 {
     private $socialMonitoringPage;
 
+    /**
+     * SocialMonitoringContext constructor.
+     *
+     * @param SocialMonitoringPage $page
+     */
     public function __construct(SocialMonitoringPage $page)
     {
         $this->socialMonitoringPage = $page;

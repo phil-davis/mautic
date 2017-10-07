@@ -22,6 +22,11 @@ class EmailsContext extends RawMinkContext implements Context
 {
     private $emailsPage;
 
+    /**
+     * EmailsContext constructor.
+     *
+     * @param EmailsPage $page
+     */
     public function __construct(EmailsPage $page)
     {
         $this->emailsPage = $page;

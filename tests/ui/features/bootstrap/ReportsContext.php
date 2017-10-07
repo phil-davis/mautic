@@ -22,6 +22,11 @@ class ReportsContext extends RawMinkContext implements Context
 {
     private $reportsPage;
 
+    /**
+     * ReportsContext constructor.
+     *
+     * @param ReportsPage $page
+     */
     public function __construct(ReportsPage $page)
     {
         $this->reportsPage = $page;

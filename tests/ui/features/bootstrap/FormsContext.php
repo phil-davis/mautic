@@ -22,6 +22,11 @@ class FormsContext extends RawMinkContext implements Context
 {
     private $formsPage;
 
+    /**
+     * FormsContext constructor.
+     *
+     * @param FormsPage $page
+     */
     public function __construct(FormsPage $page)
     {
         $this->formsPage = $page;
