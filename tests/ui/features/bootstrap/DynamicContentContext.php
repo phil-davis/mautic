@@ -22,6 +22,11 @@ class DynamicContentContext extends RawMinkContext implements Context
 {
     private $dynamicContentPage;
 
+    /**
+     * DynamicContentContext constructor.
+     *
+     * @param DynamicContentPage $page
+     */
     public function __construct(DynamicContentPage $page)
     {
         $this->dynamicContentPage = $page;

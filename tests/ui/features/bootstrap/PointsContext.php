@@ -22,6 +22,11 @@ class PointsContext extends RawMinkContext implements Context
 {
     private $pointsPage;
 
+    /**
+     * PointsContext constructor.
+     *
+     * @param PointsPage $page
+     */
     public function __construct(PointsPage $page)
     {
         $this->pointsPage = $page;

@@ -22,6 +22,11 @@ class PointTriggersContext extends RawMinkContext implements Context
 {
     private $pointTriggersPage;
 
+    /**
+     * PointTriggersContext constructor.
+     *
+     * @param PointTriggersPage $page
+     */
     public function __construct(PointTriggersPage $page)
     {
         $this->pointTriggersPage = $page;

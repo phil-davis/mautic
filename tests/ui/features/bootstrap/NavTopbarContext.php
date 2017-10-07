@@ -22,6 +22,11 @@ class NavTopbarContext extends RawMinkContext implements Context
 {
     private $navTopbarPage;
 
+    /**
+     * NavTopbarContext constructor.
+     *
+     * @param NavTopbarPage $page
+     */
     public function __construct(NavTopbarPage $page)
     {
         $this->navTopbarPage = $page;

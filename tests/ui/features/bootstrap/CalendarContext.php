@@ -22,6 +22,11 @@ class CalendarContext extends RawMinkContext implements Context
 {
     private $calendarPage;
 
+    /**
+     * CalendarContext constructor.
+     *
+     * @param CalendarPage $page
+     */
     public function __construct(CalendarPage $page)
     {
         $this->calendarPage = $page;

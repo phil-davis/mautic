@@ -9,7 +9,6 @@
  * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\TableNode;
 use TestHelpers\SetupHelper;
@@ -160,15 +159,17 @@ trait BasicStructure
     /**
      * @AfterScenario @fixtures
      */
-    public function resetTestFixtures(AfterScenarioScope $scope)
+    public function resetTestFixtures()
     {
         SetupHelper::loadTestFixtures($this->mauticPath);
     }
 
     /**
      * @AfterScenario
+     *
+     * @throws Exception
      */
-    public function tearDownScenarioDeleteCreatedUsers(AfterScenarioScope $scope)
+    public function tearDownScenarioDeleteCreatedUsers()
     {
         foreach ($this->getCreatedUserNames() as $user) {
             $result = SetupHelper::deleteUser($this->mauticPath, $user);

@@ -22,6 +22,11 @@ class StagesContext extends RawMinkContext implements Context
 {
     private $stagesPage;
 
+    /**
+     * StagesContext constructor.
+     *
+     * @param StagesPage $page
+     */
     public function __construct(StagesPage $page)
     {
         $this->stagesPage = $page;

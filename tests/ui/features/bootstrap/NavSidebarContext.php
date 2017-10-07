@@ -22,6 +22,11 @@ class NavSidebarContext extends RawMinkContext implements Context
 {
     private $navSidebarPage;
 
+    /**
+     * NavSidebarContext constructor.
+     *
+     * @param NavSidebarPage $page
+     */
     public function __construct(NavSidebarPage $page)
     {
         $this->navSidebarPage = $page;
