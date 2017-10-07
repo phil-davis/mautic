@@ -57,8 +57,13 @@ Feature: account
     Given I am logged in as sales
     And I select the Account topbar entry
     Then I should be redirected to a page with the title "Account | Mautic"
-    When I set account language to "German"
+    When I set account language to "French"
     And I apply the account changes
     And I go to the account page
-    Then the account language is "German"
+    Then the account language is "Francais"
+    And the account language title is "Langue"
+    When I set account language to "Allemand"
+    And I apply the account changes
+    And I go to the account page
+    Then the account language is "Deutsche"
     And the account language title is "Sprache"
