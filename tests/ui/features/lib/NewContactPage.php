@@ -258,7 +258,7 @@ class NewContactPage extends MauticPage
     public function applyChanges(Session $session)
     {
         $applyButtonId = $this->applyButtonNormalId;
-        $applyButton = $this->findById($applyButtonId);
+        $applyButton   = $this->findById($applyButtonId);
 
         if ($applyButton === null) {
             throw new ElementNotFoundException('could not find normal contact apply button');
