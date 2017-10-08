@@ -29,6 +29,9 @@ class NewContactPage extends MauticPage
     protected $address1InputId      = 'lead_address1';
     protected $address2InputId      = 'lead_address2';
     protected $cityInputId          = 'lead_city';
+    protected $stateChosenId        = 'lead_state_chosen';
+    protected $stateResultsXpath    = "//ul[@class='chosen-results']";
+    protected $stateListItemXpath   = "//li[contains(text(), '%s')]";
     protected $countryChosenId      = 'lead_country_chosen';
     protected $countryResultsXpath  = "//ul[@class='chosen-results']";
     protected $countryListItemXpath = "//li[contains(text(), '%s')]";
@@ -75,29 +78,65 @@ class NewContactPage extends MauticPage
         $this->fillField($this->cityInputId, $text);
     }
 
+    public function selectState($state)
+    {
+        // We have to click on the state chosen because that is what is displayed
+        // on top and is clickable.
+        $chosenElement = $this->findById($this->stateChosenId);
+
+        if ($chosenElement === null) {
+            throw new ElementNotFoundException(
+                'selectState:could not find state chosen element'
+            );
+        }
+
+        $chosenElement->click();
+
+        $selectedElement = $chosenElement->find('xpath', $this->stateResultsXpath);
+
+        if ($selectedElement === null) {
+            throw new ElementNotFoundException(
+                'selectState:could not find state results element'
+            );
+        }
+
+        $selectOption = $selectedElement->find(
+            'xpath',
+            sprintf($this->stateListItemXpath, $state)
+        );
+
+        if ($selectOption === null) {
+            throw new ElementNotFoundException(
+                'selectState:could not find state list item '.$state
+            );
+        }
+
+        $selectOption->click();
+    }
+
     public function selectCountry($country)
     {
         // We have to click on the country chosen because that is what is displayed
         // on top and is clickable.
-        $countryChosenElement = $this->findById($this->countryChosenId);
+        $chosenElement = $this->findById($this->countryChosenId);
 
-        if ($countryChosenElement === null) {
+        if ($chosenElement === null) {
             throw new ElementNotFoundException(
                 'selectCountry:could not find country chosen element'
             );
         }
 
-        $countryChosenElement->click();
+        $chosenElement->click();
 
-        $selectCountryElement = $countryChosenElement->find('xpath', $this->countryResultsXpath);
+        $selectedElement = $chosenElement->find('xpath', $this->countryResultsXpath);
 
-        if ($selectCountryElement === null) {
+        if ($selectedElement === null) {
             throw new ElementNotFoundException(
                 'selectCountry:could not find country results element'
             );
         }
 
-        $selectOption = $selectCountryElement->find(
+        $selectOption = $selectedElement->find(
             'xpath',
             sprintf($this->countryListItemXpath, $country)
         );
@@ -242,17 +281,33 @@ class NewContactPage extends MauticPage
     /**
      * @return string
      */
+    public function getState()
+    {
+        $chosenElement = $this->findById($this->stateChosenId);
+
+        if ($chosenElement === null) {
+            throw new ElementNotFoundException(
+                'getState:could not find state chosen element'
+            );
+        }
+
+        return $chosenElement->getText();
+    }
+
+    /**
+     * @return string
+     */
     public function getCountry()
     {
-        $countryChosenElement = $this->findById($this->countryChosenId);
+        $chosenElement = $this->findById($this->countryChosenId);
 
-        if ($countryChosenElement === null) {
+        if ($chosenElement === null) {
             throw new ElementNotFoundException(
                 'getCountry:could not find country chosen element'
             );
         }
 
-        return $countryChosenElement->getText();
+        return $chosenElement->getText();
     }
 
     public function applyChanges(Session $session)

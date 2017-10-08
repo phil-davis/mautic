@@ -24,6 +24,7 @@ Feature: contacts
     And I set contact address first line to <address1>
     And I set contact address second line to <address2>
     And I set contact city to <city>
+    And I set contact state to <state>
     And I set contact country to <country>
     And I apply the contact changes
     Then the contact title is <title>
@@ -34,8 +35,9 @@ Feature: contacts
     And the contact address first line is <address1>
     And the contact address second line is <address2>
     And the contact city is <city>
+    And the contact state is <displayed_state_text>
     And the contact country is <country>
     Examples:
-      |title |first_name |last_name |email            |position      |address1    |address2    |city   |country        |
-      |Prof  |Kovačević  |Müller    |kova@example.com |Manager       |18 Grove Rd |            |Berlin |Germany        |
-      |Mr    |Aaron      |Anderson  |aa@example.com   |Admin Officer |Unit 11     |12 Smith St |London |United Kingdom |
+      |title |first_name |last_name |email            |position      |address1    |address2    |city   |state          |country        |displayed_state_text         |
+      |Prof  |Kovačević  |Müller    |kova@example.com |Manager       |18 Grove Rd |            |Berlin |Bayern         |Germany        |GermanyBayern                |
+      |Mr    |Aaron      |Anderson  |aa@example.com   |Admin Officer |Unit 11     |12 Smith St |London |Greater London |United Kingdom |United KingdomGreater London |

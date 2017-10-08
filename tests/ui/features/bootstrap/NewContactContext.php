@@ -114,6 +114,14 @@ class NewContactContext extends RawMinkContext implements Context
     }
 
     /**
+     * @Given /^I set contact state to (.*)$/
+     */
+    public function iSetContactStateTo($text)
+    {
+        $this->newContactPage->selectState($text);
+    }
+
+    /**
      * @Given /^I set contact country to (.*)$/
      */
     public function iSetContactCountryTo($text)
@@ -206,6 +214,17 @@ class NewContactContext extends RawMinkContext implements Context
         PHPUnit_Framework_Assert::assertEquals(
             $text,
             $this->newContactPage->getAddress2()
+        );
+    }
+
+    /**
+     * @Then /^the contact state is (.*)$/
+     */
+    public function theContactStateIs($text)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $text,
+            $this->newContactPage->getState()
         );
     }
 
