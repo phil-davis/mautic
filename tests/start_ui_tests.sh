@@ -79,6 +79,19 @@ then
 	else
 		BEHAT_TAGS='~@skip&&~@skipOnIE'
 	fi
+elif [ "$BROWSER" == "firefox" ]
+then
+	if [ "$BEHAT_TAGS_OPTION_FOUND" = true ]
+	then
+		if [ -z "$BEHAT_TAGS" ]
+		then
+			BEHAT_TAGS='~@skipOnFirefox'
+		else
+			BEHAT_TAGS="$BEHAT_TAGS&&~@skipOnFirefox"
+		fi
+	else
+		BEHAT_TAGS='~@skip&&~@skipOnFirefox'
+	fi
 else
 	if [ "$BEHAT_TAGS_OPTION_FOUND" = true ]
 	then
