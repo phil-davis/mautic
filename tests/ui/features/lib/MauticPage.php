@@ -97,9 +97,9 @@ class MauticPage extends Page
      * These popups go away themselves after a few seconds, so we just wait,
      * rather than trying to find them and close them.
      *
-     * @param Element $element
-     * @param string  $elementName
-     * @param int     $timeout_msec
+     * @param NodeElement $element
+     * @param string      $elementName
+     * @param int         $timeout_msec
      *
      * @throws \Exception
      */
@@ -125,6 +125,61 @@ class MauticPage extends Page
 
         // The timeout expired and we still cannot click
         throw new \Exception('could not click '.$elementName.' within '.$timeout_msec.'msec');
+    }
+
+    /**
+     * Find the element correspondding to the given selector and scroll it into view.
+     * Acknowledgement to nickrealdini https://gist.github.com/MKorostoff/c94824a467ffa53f4fa9#gistcomment-2095785
+     *
+     * @param Session $session
+     * @param string  $selector Allowed selectors: #id, .className, //xpath
+     *
+     * @throws \Exception
+     */
+    public function scrollIntoView(Session $session, $selector)
+    {
+        $locator = substr($selector, 0, 1);
+
+        switch ($locator) {
+            case '/' : // XPath selector
+                $function = <<<JS
+(function(){
+  var elem = document.evaluate($selector, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  elem.scrollIntoView(false);
+})()
+JS;
+                break;
+
+            case '#' : // ID selector
+                $selector = substr($selector, 1);
+                $function = <<<JS
+(function(){
+  var elem = document.getElementById("$selector");
+  elem.scrollIntoView(false);
+})()
+JS;
+                break;
+
+            case '.' : // Class selector
+                $selector = substr($selector, 1);
+                $function = <<<JS
+(function(){
+  var elem = document.getElementsByClassName("$selector");
+  elem[0].scrollIntoView(false);
+})()
+JS;
+                break;
+
+            default:
+                throw new \Exception(__METHOD__ . ' Couldn\'t find selector: ' . $selector . ' - Allowed selectors: #id, .className, //xpath');
+                break;
+        }
+
+        try {
+            $session->executeScript($function);
+        } catch (\Exception $e) {
+            throw new \Exception(__METHOD__ . ' failed');
+        }
     }
 
     // TODO: see if notifications come like this in Mautic
