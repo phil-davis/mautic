@@ -118,7 +118,7 @@ class NewContactContext extends RawMinkContext implements Context
      */
     public function iSetContactStateTo($text)
     {
-        $this->newContactPage->selectState($text);
+        $this->newContactPage->selectState($this->getSession(), $text);
     }
 
     /**
@@ -126,7 +126,7 @@ class NewContactContext extends RawMinkContext implements Context
      */
     public function iSetContactCountryTo($text)
     {
-        $this->newContactPage->selectCountry($text);
+        $this->newContactPage->selectCountry($this->getSession(), $text);
     }
 
     /**
