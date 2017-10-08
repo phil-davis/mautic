@@ -20,19 +20,19 @@ class NewContactPage extends MauticPage
     /**
      * @var string
      */
-    protected $path                       = '/s/contacts/new';
-    protected $titleInputId               = 'lead_title';
-    protected $firstNameInputId           = 'lead_firstname';
-    protected $lastNameInputId            = 'lead_lastname';
-    protected $emailInputId               = 'lead_email';
-    protected $positionInputId            = 'lead_position';
-    protected $address1InputId            = 'lead_address1';
-    protected $address2InputId            = 'lead_address2';
-    protected $cityInputId                = 'lead_city';
-    protected $stateChosenId              = 'lead_state_chosen';
-    protected $countryChosenId            = 'lead_country_chosen';
-    protected $applyButtonNormalId        = 'lead_buttons_apply_toolbar';
-    protected $applyButtonMobileId        = 'lead_buttons_apply_toolbar_mobile';
+    protected $path                = '/s/contacts/new';
+    protected $titleInputId        = 'lead_title';
+    protected $firstNameInputId    = 'lead_firstname';
+    protected $lastNameInputId     = 'lead_lastname';
+    protected $emailInputId        = 'lead_email';
+    protected $positionInputId     = 'lead_position';
+    protected $address1InputId     = 'lead_address1';
+    protected $address2InputId     = 'lead_address2';
+    protected $cityInputId         = 'lead_city';
+    protected $stateChosenId       = 'lead_state_chosen';
+    protected $countryChosenId     = 'lead_country_chosen';
+    protected $applyButtonNormalId = 'lead_buttons_apply_toolbar';
+    protected $applyButtonMobileId = 'lead_buttons_apply_toolbar_mobile';
 
     /**
      * @param string $text
@@ -280,6 +280,7 @@ class NewContactPage extends MauticPage
 
     /**
      * @param Session $session
+     *
      * @throws ElementNotVisible
      */
     public function applyChanges(Session $session)
