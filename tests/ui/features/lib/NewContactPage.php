@@ -100,7 +100,7 @@ class NewContactPage extends MauticPage
 
     /**
      * @param Session $session
-     * @param string $text
+     * @param string  $text
      */
     public function selectState(Session $session, $text)
     {
@@ -110,7 +110,7 @@ class NewContactPage extends MauticPage
 
     /**
      * @param Session $session
-     * @param string $text
+     * @param string  $text
      */
     public function selectCountry(Session $session, $text)
     {
