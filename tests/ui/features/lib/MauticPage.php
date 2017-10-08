@@ -13,13 +13,16 @@ namespace Page;
 
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Session;
+use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\ElementNotFoundException;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Page;
 use WebDriver\Exception as WebDriverException;
 use WebDriver\Key;
 
 class MauticPage extends Page
 {
-    protected $userNameDisplayId = 'expandDisplayName';
+    protected $userNameDisplayId          = 'expandDisplayName';
+    protected $chosenResultsXpath         = "//ul[@class='chosen-results']";
+    protected $chosenResultsListItemXpath = "//li[contains(text(), '%s')]";
 
     // TODO: sort out waiting for page loads in Mautic
     public function waitTillPageIsLoaded(Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
@@ -128,7 +131,7 @@ class MauticPage extends Page
     }
 
     /**
-     * Find the element correspondding to the given selector and scroll it into view.
+     * Find the element corresponding to the given selector and scroll it into view.
      * Acknowledgement to https://gist.github.com/MKorostoff/c94824a467ffa53f4fa9#gistcomment-2095785 nickrealdini.
      *
      * @param Session $session
@@ -180,6 +183,52 @@ JS;
         } catch (\Exception $e) {
             throw new \Exception(__METHOD__.' failed');
         }
+    }
+
+    /**
+     * Look in the Mautic-style drop-down chooser for the item with the given text.
+     * And click that item.
+     * The chooser is a different thing to the select. Typically the chooser has an
+     * id like 'lead_state_chosen'. The chooser is the thing that is displayed.
+     * The select is hidden in the background.
+     *
+     * @param string $id
+     * @param string $text
+     */
+    public function selectFromChooser($id, $text)
+    {
+        // We have to click on the chosen, not the select, because that is what is
+        // displayed on top and is clickable.
+        $chosenElement = $this->findById($id);
+
+        if ($chosenElement === null) {
+            throw new ElementNotFoundException(
+                'selectFromChooser:could not find chooser id '.$id
+            );
+        }
+
+        $chosenElement->click();
+
+        $selectedElement = $chosenElement->find('xpath', $this->chosenResultsXpath);
+
+        if ($selectedElement === null) {
+            throw new ElementNotFoundException(
+                'selectFromChooser:could not find chosen results in chooser id '.$id
+            );
+        }
+
+        $selectOption = $selectedElement->find(
+            'xpath',
+            sprintf($this->chosenResultsListItemXpath, $text)
+        );
+
+        if ($selectOption === null) {
+            throw new ElementNotFoundException(
+                'selectFromChooser:could not find value '.$text.' in chooser id '.$id
+            );
+        }
+
+        $selectOption->click();
     }
 
     // TODO: see if notifications come like this in Mautic
