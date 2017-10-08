@@ -11,6 +11,7 @@
 
 namespace Page;
 
+use Behat\Mink\Session;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\ElementNotFoundException;
 use WebDriver\Exception\ElementNotVisible;
 
@@ -19,17 +20,20 @@ class NewContactPage extends MauticPage
     /**
      * @var string
      */
-    protected $path                = '/s/contacts/new';
-    protected $titleInputId        = 'lead_title';
-    protected $firstNameInputId    = 'lead_firstname';
-    protected $lastNameInputId     = 'lead_lastname';
-    protected $emailInputId        = 'lead_email';
-    protected $positionInputId     = 'lead_position';
-    protected $address1InputId     = 'lead_address1';
-    protected $address2InputId     = 'lead_address2';
-    protected $cityInputId         = 'lead_city';
-    protected $applyButtonNormalId = 'lead_buttons_apply_toolbar';
-    protected $applyButtonMobileId = 'lead_buttons_apply_toolbar_mobile';
+    protected $path                 = '/s/contacts/new';
+    protected $titleInputId         = 'lead_title';
+    protected $firstNameInputId     = 'lead_firstname';
+    protected $lastNameInputId      = 'lead_lastname';
+    protected $emailInputId         = 'lead_email';
+    protected $positionInputId      = 'lead_position';
+    protected $address1InputId      = 'lead_address1';
+    protected $address2InputId      = 'lead_address2';
+    protected $cityInputId          = 'lead_city';
+    protected $countryChosenId      = 'lead_country_chosen';
+    protected $countryResultsXpath  = "//ul[@class='chosen-results']";
+    protected $countryListItemXpath = "//li[contains(text(), '%s')]";
+    protected $applyButtonNormalId  = 'lead_buttons_apply_toolbar';
+    protected $applyButtonMobileId  = 'lead_buttons_apply_toolbar_mobile';
 
     public function setTitle($title)
     {
@@ -69,6 +73,42 @@ class NewContactPage extends MauticPage
     public function setCity($text)
     {
         $this->fillField($this->cityInputId, $text);
+    }
+
+    public function selectCountry($country)
+    {
+        // We have to click on the country chosen because that is what is displayed
+        // on top and is clickable.
+        $countryChosenElement = $this->findById($this->countryChosenId);
+
+        if ($countryChosenElement === null) {
+            throw new ElementNotFoundException(
+                'selectCountry:could not find country chosen element'
+            );
+        }
+
+        $countryChosenElement->click();
+
+        $selectCountryElement = $countryChosenElement->find('xpath', $this->countryResultsXpath);
+
+        if ($selectCountryElement === null) {
+            throw new ElementNotFoundException(
+                'selectCountry:could not find country results element'
+            );
+        }
+
+        $selectOption = $selectCountryElement->find(
+            'xpath',
+            sprintf($this->countryListItemXpath, $country)
+        );
+
+        if ($selectOption === null) {
+            throw new ElementNotFoundException(
+                'selectCountry:could not find country list item '.$country
+            );
+        }
+
+        $selectOption->click();
     }
 
     /**
@@ -199,16 +239,35 @@ class NewContactPage extends MauticPage
         return $pageElement->getValue();
     }
 
-    public function applyChanges()
+    /**
+     * @return string
+     */
+    public function getCountry()
     {
-        $applyButton = $this->findById($this->applyButtonNormalId);
+        $countryChosenElement = $this->findById($this->countryChosenId);
+
+        if ($countryChosenElement === null) {
+            throw new ElementNotFoundException(
+                'getCountry:could not find country chosen element'
+            );
+        }
+
+        return $countryChosenElement->getText();
+    }
+
+    public function applyChanges(Session $session)
+    {
+        $applyButtonId = $this->applyButtonNormalId;
+        $applyButton = $this->findById($applyButtonId);
 
         if ($applyButton === null) {
             throw new ElementNotFoundException('could not find normal contact apply button');
         }
 
         if (!$applyButton->isVisible()) {
-            $applyButton = $this->findById($this->applyButtonMobileId);
+            $applyButtonId = $this->applyButtonMobileId;
+
+            $applyButton = $this->findById($applyButtonId);
 
             if ($applyButton === null) {
                 throw new ElementNotFoundException('could not find mobile contact apply button');
@@ -219,6 +278,7 @@ class NewContactPage extends MauticPage
             throw new ElementNotVisible('could not find any visible contact apply button');
         }
 
-        $applyButton->click();
+        $this->scrollIntoView($session, '#'.$applyButtonId);
+        $this->clickWithTimeout($applyButton, 'new contact apply button');
     }
 }
