@@ -77,6 +77,13 @@ class NavSidebarPage extends MauticPage
         'reports'            => 'ReportsPage',
     ];
 
+    /**
+     * @param string      $mainEntry
+     * @param string|null $subEntry
+     * @param bool        $clickTheMainEntry
+     *
+     * @return \SensioLabs\Behat\PageObjectExtension\PageObject\Page
+     */
     public function selectNavSidebarEntry($mainEntry, $subEntry = null, $clickTheMainEntry = true)
     {
         $mainEntry = strtolower($mainEntry);

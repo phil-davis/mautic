@@ -23,6 +23,8 @@ class ContactsPage extends MauticPage
 
     /**
      * Find and click the new contact button.
+     *
+     * @throws ElementNotFoundException
      */
     public function selectNewContactButton()
     {

@@ -24,6 +24,13 @@ class LoginPage extends MauticPage
     protected $passwordInputId   = 'password';
     protected $submitButtonXpath = "//button[@type='submit']";
 
+    /**
+     * @param string $username
+     * @param string $password
+     * @param string $target
+     *
+     * @return MauticPage|\SensioLabs\Behat\PageObjectExtension\PageObject\Page
+     */
     public function loginAs($username, $password, $target = 'DashboardPage')
     {
         $this->fillField($this->userInputId, $username);
@@ -39,9 +46,13 @@ class LoginPage extends MauticPage
         return $this->getPage($target);
     }
 
-    //there is no reliable loading indicator on the login page, so just wait for
-    //the user and password to be there.
-    // TODO: review waiting code in the Mautic environment
+    /**
+     * There is no reliable loading indicator on the login page, so wait for
+     * the user and password to be there.
+     *
+     * @param Session $session
+     * @param int     $timeout_msec
+     */
     public function waitTillPageIsLoaded(Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $currentTime = microtime(true);

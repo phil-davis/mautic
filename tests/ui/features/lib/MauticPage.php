@@ -20,11 +20,13 @@ use WebDriver\Key;
 
 class MauticPage extends Page
 {
-    protected $userNameDisplayId          = 'expandDisplayName';
     protected $chosenResultsXpath         = "//ul[@class='chosen-results']";
     protected $chosenResultsListItemXpath = "//li[contains(text(), '%s')]";
 
-    // TODO: sort out waiting for page loads in Mautic
+    /**
+     * @param Session $session
+     * @param int     $timeout_msec
+     */
     public function waitTillPageIsLoaded(Session $session, $timeout_msec = STANDARD_UI_WAIT_TIMEOUT_MILLISEC)
     {
         $currentTime = microtime(true);
@@ -231,12 +233,21 @@ JS;
         $selectOption->click();
     }
 
-    // TODO: see if notifications come like this in Mautic
+    /**
+     * TODO: see if notifications come like this in Mautic.
+     *
+     * @return string
+     */
     public function getNotificationText()
     {
         return $this->findById('notification')->getText();
     }
 
+    /**
+     * TODO: see if notifications come like this in Mautic.
+     *
+     * @return array
+     */
     public function getNotifications()
     {
         $notificationsText = [];
@@ -246,17 +257,6 @@ JS;
         }
 
         return $notificationsText;
-    }
-
-    /**
-     * finds the logged-in username displayed in the top right corner
-     * TODO: make something like this work in Mautic.
-     *
-     * @return string
-     */
-    public function getMyUsername()
-    {
-        return $this->findById($this->userNameDisplayId)->getText();
     }
 
     /**
