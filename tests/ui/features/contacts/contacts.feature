@@ -20,12 +20,20 @@ Feature: contacts
     And I set contact first name to <first_name>
     And I set contact last name to <last_name>
     And I set contact email to <email>
+    And I set contact position to <position>
+    And I set contact address first line to <address1>
+    And I set contact address second line to <address2>
+    And I set contact city to <city>
     And I apply the contact changes
     Then the contact title is <title>
     And the contact first name is <first_name>
     And the contact last name is <last_name>
     And the contact email is <email>
+    And the contact position is <position>
+    And the contact address first line is <address1>
+    And the contact address second line is <address2>
+    And the contact city is <city>
     Examples:
-      |title |first_name |last_name |email            |
-      |Prof  |Kovačević  |Müller    |kova@example.com |
-      |Mr    |Aaron      |Anderson  |aa@example.com   |
+      |title |first_name |last_name |email            |position      |address1    |address2    |city   |
+      |Prof  |Kovačević  |Müller    |kova@example.com |Manager       |18 Grove Rd |            |Berlin |
+      |Mr    |Aaron      |Anderson  |aa@example.com   |Admin Officer |Unit 11     |12 Smith St |London |
