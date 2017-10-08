@@ -114,11 +114,19 @@ class NewContactContext extends RawMinkContext implements Context
     }
 
     /**
+     * @Given /^I set contact country to (.*)$/
+     */
+    public function iSetContactCountryTo($text)
+    {
+        $this->newContactPage->selectCountry($text);
+    }
+
+    /**
      * @Given /^I apply the contact changes$/
      */
     public function iApplyTheContactChanges()
     {
-        $this->newContactPage->applyChanges();
+        $this->newContactPage->applyChanges($this->getSession());
         $this->newContactPage->waitTillPageIsLoaded($this->getSession());
     }
 
@@ -209,6 +217,17 @@ class NewContactContext extends RawMinkContext implements Context
         PHPUnit_Framework_Assert::assertEquals(
             $text,
             $this->newContactPage->getCity()
+        );
+    }
+
+    /**
+     * @Then /^the contact country is (.*)$/
+     */
+    public function theAccountLanguageIs($text)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $text,
+            $this->newContactPage->getCountry()
         );
     }
 }
