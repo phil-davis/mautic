@@ -129,7 +129,7 @@ class MauticPage extends Page
 
     /**
      * Find the element correspondding to the given selector and scroll it into view.
-     * Acknowledgement to nickrealdini https://gist.github.com/MKorostoff/c94824a467ffa53f4fa9#gistcomment-2095785
+     * Acknowledgement to https://gist.github.com/MKorostoff/c94824a467ffa53f4fa9#gistcomment-2095785 nickrealdini.
      *
      * @param Session $session
      * @param string  $selector Allowed selectors: #id, .className, //xpath
@@ -141,7 +141,7 @@ class MauticPage extends Page
         $locator = substr($selector, 0, 1);
 
         switch ($locator) {
-            case '/' : // XPath selector
+            case '/': // XPath selector
                 $function = <<<JS
 (function(){
   var elem = document.evaluate($selector, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
@@ -150,7 +150,7 @@ class MauticPage extends Page
 JS;
                 break;
 
-            case '#' : // ID selector
+            case '#': // ID selector
                 $selector = substr($selector, 1);
                 $function = <<<JS
 (function(){
@@ -160,7 +160,7 @@ JS;
 JS;
                 break;
 
-            case '.' : // Class selector
+            case '.': // Class selector
                 $selector = substr($selector, 1);
                 $function = <<<JS
 (function(){
@@ -171,14 +171,14 @@ JS;
                 break;
 
             default:
-                throw new \Exception(__METHOD__ . ' Couldn\'t find selector: ' . $selector . ' - Allowed selectors: #id, .className, //xpath');
+                throw new \Exception(__METHOD__.' Couldn\'t find selector: '.$selector.' - Allowed selectors: #id, .className, //xpath');
                 break;
         }
 
         try {
             $session->executeScript($function);
         } catch (\Exception $e) {
-            throw new \Exception(__METHOD__ . ' failed');
+            throw new \Exception(__METHOD__.' failed');
         }
     }
 
