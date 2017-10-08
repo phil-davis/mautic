@@ -20,134 +20,98 @@ class NewContactPage extends MauticPage
     /**
      * @var string
      */
-    protected $path                 = '/s/contacts/new';
-    protected $titleInputId         = 'lead_title';
-    protected $firstNameInputId     = 'lead_firstname';
-    protected $lastNameInputId      = 'lead_lastname';
-    protected $emailInputId         = 'lead_email';
-    protected $positionInputId      = 'lead_position';
-    protected $address1InputId      = 'lead_address1';
-    protected $address2InputId      = 'lead_address2';
-    protected $cityInputId          = 'lead_city';
-    protected $stateChosenId        = 'lead_state_chosen';
-    protected $stateResultsXpath    = "//ul[@class='chosen-results']";
-    protected $stateListItemXpath   = "//li[contains(text(), '%s')]";
-    protected $countryChosenId      = 'lead_country_chosen';
-    protected $countryResultsXpath  = "//ul[@class='chosen-results']";
-    protected $countryListItemXpath = "//li[contains(text(), '%s')]";
-    protected $applyButtonNormalId  = 'lead_buttons_apply_toolbar';
-    protected $applyButtonMobileId  = 'lead_buttons_apply_toolbar_mobile';
+    protected $path                       = '/s/contacts/new';
+    protected $titleInputId               = 'lead_title';
+    protected $firstNameInputId           = 'lead_firstname';
+    protected $lastNameInputId            = 'lead_lastname';
+    protected $emailInputId               = 'lead_email';
+    protected $positionInputId            = 'lead_position';
+    protected $address1InputId            = 'lead_address1';
+    protected $address2InputId            = 'lead_address2';
+    protected $cityInputId                = 'lead_city';
+    protected $stateChosenId              = 'lead_state_chosen';
+    protected $countryChosenId            = 'lead_country_chosen';
+    protected $applyButtonNormalId        = 'lead_buttons_apply_toolbar';
+    protected $applyButtonMobileId        = 'lead_buttons_apply_toolbar_mobile';
 
-    public function setTitle($title)
+    /**
+     * @param string $text
+     */
+    public function setTitle($text)
     {
-        $this->fillField($this->titleInputId, $title);
+        $this->fillField($this->titleInputId, $text);
     }
 
-    public function setFirstName($firstName)
+    /**
+     * @param string $text
+     */
+    public function setFirstName($text)
     {
-        $this->fillField($this->firstNameInputId, $firstName);
+        $this->fillField($this->firstNameInputId, $text);
     }
 
-    public function setLastName($lastName)
+    /**
+     * @param string $text
+     */
+    public function setLastName($text)
     {
-        $this->fillField($this->lastNameInputId, $lastName);
+        $this->fillField($this->lastNameInputId, $text);
     }
 
-    public function setEmail($email)
+    /**
+     * @param string $text
+     */
+    public function setEmail($text)
     {
-        $this->fillField($this->emailInputId, $email);
+        $this->fillField($this->emailInputId, $text);
     }
 
+    /**
+     * @param string $text
+     */
     public function setPosition($text)
     {
         $this->fillField($this->positionInputId, $text);
     }
 
+    /**
+     * @param string $text
+     */
     public function setAddress1($text)
     {
         $this->fillField($this->address1InputId, $text);
     }
 
+    /**
+     * @param string $text
+     */
     public function setAddress2($text)
     {
         $this->fillField($this->address2InputId, $text);
     }
 
+    /**
+     * @param string $text
+     */
     public function setCity($text)
     {
         $this->fillField($this->cityInputId, $text);
     }
 
-    public function selectState($state)
+    /**
+     * @param string $text
+     */
+    public function selectState($text)
     {
-        // We have to click on the state chosen because that is what is displayed
-        // on top and is clickable.
-        $chosenElement = $this->findById($this->stateChosenId);
-
-        if ($chosenElement === null) {
-            throw new ElementNotFoundException(
-                'selectState:could not find state chosen element'
-            );
-        }
-
-        $chosenElement->click();
-
-        $selectedElement = $chosenElement->find('xpath', $this->stateResultsXpath);
-
-        if ($selectedElement === null) {
-            throw new ElementNotFoundException(
-                'selectState:could not find state results element'
-            );
-        }
-
-        $selectOption = $selectedElement->find(
-            'xpath',
-            sprintf($this->stateListItemXpath, $state)
-        );
-
-        if ($selectOption === null) {
-            throw new ElementNotFoundException(
-                'selectState:could not find state list item '.$state
-            );
-        }
-
-        $selectOption->click();
+        $this->selectFromChooser($this->stateChosenId, $text);
     }
 
-    public function selectCountry($country)
+    /**
+     * @param string $text
+     */
+    public function selectCountry($text)
     {
-        // We have to click on the country chosen because that is what is displayed
-        // on top and is clickable.
-        $chosenElement = $this->findById($this->countryChosenId);
-
-        if ($chosenElement === null) {
-            throw new ElementNotFoundException(
-                'selectCountry:could not find country chosen element'
-            );
-        }
-
-        $chosenElement->click();
-
-        $selectedElement = $chosenElement->find('xpath', $this->countryResultsXpath);
-
-        if ($selectedElement === null) {
-            throw new ElementNotFoundException(
-                'selectCountry:could not find country results element'
-            );
-        }
-
-        $selectOption = $selectedElement->find(
-            'xpath',
-            sprintf($this->countryListItemXpath, $country)
-        );
-
-        if ($selectOption === null) {
-            throw new ElementNotFoundException(
-                'selectCountry:could not find country list item '.$country
-            );
-        }
-
-        $selectOption->click();
+        $this->selectFromChooser($this->countryChosenId, $text);
     }
 
     /**
@@ -310,6 +274,10 @@ class NewContactPage extends MauticPage
         return $chosenElement->getText();
     }
 
+    /**
+     * @param Session $session
+     * @throws ElementNotVisible
+     */
     public function applyChanges(Session $session)
     {
         $applyButtonId = $this->applyButtonNormalId;
