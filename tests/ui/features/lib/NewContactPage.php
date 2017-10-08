@@ -99,18 +99,22 @@ class NewContactPage extends MauticPage
     }
 
     /**
+     * @param Session $session
      * @param string $text
      */
-    public function selectState($text)
+    public function selectState(Session $session, $text)
     {
+        $this->scrollIntoView($session, '#'.$this->stateChosenId);
         $this->selectFromChooser($this->stateChosenId, $text);
     }
 
     /**
+     * @param Session $session
      * @param string $text
      */
-    public function selectCountry($text)
+    public function selectCountry(Session $session, $text)
     {
+        $this->scrollIntoView($session, '#'.$this->countryChosenId);
         $this->selectFromChooser($this->countryChosenId, $text);
     }
 
