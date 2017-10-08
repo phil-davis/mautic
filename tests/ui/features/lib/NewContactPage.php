@@ -24,6 +24,10 @@ class NewContactPage extends MauticPage
     protected $firstNameInputId    = 'lead_firstname';
     protected $lastNameInputId     = 'lead_lastname';
     protected $emailInputId        = 'lead_email';
+    protected $positionInputId     = 'lead_position';
+    protected $address1InputId     = 'lead_address1';
+    protected $address2InputId     = 'lead_address2';
+    protected $cityInputId         = 'lead_city';
     protected $applyButtonNormalId = 'lead_buttons_apply_toolbar';
     protected $applyButtonMobileId = 'lead_buttons_apply_toolbar_mobile';
 
@@ -45,6 +49,26 @@ class NewContactPage extends MauticPage
     public function setEmail($email)
     {
         $this->fillField($this->emailInputId, $email);
+    }
+
+    public function setPosition($text)
+    {
+        $this->fillField($this->positionInputId, $text);
+    }
+
+    public function setAddress1($text)
+    {
+        $this->fillField($this->address1InputId, $text);
+    }
+
+    public function setAddress2($text)
+    {
+        $this->fillField($this->address2InputId, $text);
+    }
+
+    public function setCity($text)
+    {
+        $this->fillField($this->cityInputId, $text);
     }
 
     /**
@@ -109,6 +133,70 @@ class NewContactPage extends MauticPage
         }
 
         return $emailElement->getValue();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPosition()
+    {
+        $pageElement = $this->findById($this->positionInputId);
+
+        if ($pageElement === null) {
+            throw new ElementNotFoundException(
+                'getPosition:could not find element'
+            );
+        }
+
+        return $pageElement->getValue();
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress1()
+    {
+        $pageElement = $this->findById($this->address1InputId);
+
+        if ($pageElement === null) {
+            throw new ElementNotFoundException(
+                'getAddress1:could not find element'
+            );
+        }
+
+        return $pageElement->getValue();
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress2()
+    {
+        $pageElement = $this->findById($this->address2InputId);
+
+        if ($pageElement === null) {
+            throw new ElementNotFoundException(
+                'getAddress2:could not find element'
+            );
+        }
+
+        return $pageElement->getValue();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
+        $pageElement = $this->findById($this->cityInputId);
+
+        if ($pageElement === null) {
+            throw new ElementNotFoundException(
+                'getCity:could not find element'
+            );
+        }
+
+        return $pageElement->getValue();
     }
 
     public function applyChanges()

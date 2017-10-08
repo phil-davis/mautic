@@ -82,6 +82,38 @@ class NewContactContext extends RawMinkContext implements Context
     }
 
     /**
+     * @Given /^I set contact position to (.*)$/
+     */
+    public function iSetContactPositionTo($text)
+    {
+        $this->newContactPage->setPosition($text);
+    }
+
+    /**
+     * @Given /^I set contact address first line to (.*)$/
+     */
+    public function iSetContactAddress1To($text)
+    {
+        $this->newContactPage->setAddress1($text);
+    }
+
+    /**
+     * @Given /^I set contact address second line to (.*)$/
+     */
+    public function iSetContactAddress2To($text)
+    {
+        $this->newContactPage->setAddress2($text);
+    }
+
+    /**
+     * @Given /^I set contact city to (.*)$/
+     */
+    public function iSetContactCityTo($text)
+    {
+        $this->newContactPage->setCity($text);
+    }
+
+    /**
      * @Given /^I apply the contact changes$/
      */
     public function iApplyTheContactChanges()
@@ -104,7 +136,7 @@ class NewContactContext extends RawMinkContext implements Context
     }
 
     /**
-     * @Given /^the contact first name is (.*)$/
+     * @Then /^the contact first name is (.*)$/
      */
     public function theContactFirstNameIs($firstName)
     {
@@ -115,7 +147,7 @@ class NewContactContext extends RawMinkContext implements Context
     }
 
     /**
-     * @Given /^the contact last name is (.*)$/
+     * @Then /^the contact last name is (.*)$/
      */
     public function theContactLastNameIs($lastName)
     {
@@ -126,13 +158,57 @@ class NewContactContext extends RawMinkContext implements Context
     }
 
     /**
-     * @Given /^the contact email is (.*)$/
+     * @Then /^the contact email is (.*)$/
      */
     public function theContactEmailIs($email)
     {
         PHPUnit_Framework_Assert::assertEquals(
             $email,
             $this->newContactPage->getEmail()
+        );
+    }
+
+    /**
+     * @Then /^the contact position is (.*)$/
+     */
+    public function theContactPositionIs($text)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $text,
+            $this->newContactPage->getPosition()
+        );
+    }
+
+    /**
+     * @Then /^the contact address first line is (.*)$/
+     */
+    public function theContactAddress1Is($text)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $text,
+            $this->newContactPage->getAddress1()
+        );
+    }
+
+    /**
+     * @Then /^the contact address second line is (.*)$/
+     */
+    public function theContactAddress2Is($text)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $text,
+            $this->newContactPage->getAddress2()
+        );
+    }
+
+    /**
+     * @Then /^the contact city is (.*)$/
+     */
+    public function theContactCityIs($text)
+    {
+        PHPUnit_Framework_Assert::assertEquals(
+            $text,
+            $this->newContactPage->getCity()
         );
     }
 }
