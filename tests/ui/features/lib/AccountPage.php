@@ -32,16 +32,25 @@ class AccountPage extends MauticPage
     protected $applyButtonNormalId    = 'user_buttons_save_toolbar';
     protected $applyButtonMobileId    = 'user_buttons_save_toolbar_mobile';
 
+    /**
+     * @param string $firstName
+     */
     public function setFirstName($firstName)
     {
         $this->fillField($this->firstNameInputId, $firstName);
     }
 
+    /**
+     * @param string $lastName
+     */
     public function setLastName($lastName)
     {
         $this->fillField($this->lastNameInputId, $lastName);
     }
 
+    /**
+     * @param string $language
+     */
     public function selectLanguage($language)
     {
         // We have to click on the language chosen because that is what is displayed
@@ -78,11 +87,17 @@ class AccountPage extends MauticPage
         $selectOption->click();
     }
 
+    /**
+     * @param string $pwd
+     */
     public function setPassword($pwd)
     {
         $this->fillField($this->passwordInputId, $pwd);
     }
 
+    /**
+     * @param string $pwd
+     */
     public function setConfirmPassword($pwd)
     {
         $this->fillField($this->confirmPasswordInputId, $pwd);
@@ -169,6 +184,10 @@ class AccountPage extends MauticPage
         return $lastNameElement->getValue();
     }
 
+    /**
+     * @throws ElementNotFoundException
+     * @throws ElementNotVisible
+     */
     public function applyChanges()
     {
         $applyButton = $this->findById($this->applyButtonNormalId);

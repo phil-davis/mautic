@@ -16,7 +16,7 @@ use TestHelpers\SetupHelper;
 require_once 'bootstrap.php';
 
 /**
- * Features context.
+ * BasicStructure trait.
  */
 trait BasicStructure
 {
