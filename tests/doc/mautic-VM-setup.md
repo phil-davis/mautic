@@ -131,6 +131,13 @@ sudo apt-get install php5.6-mbstring
 sudo apt-get install php5.6-intl
 ```
 
+To switch between PHP versions read:
+https://askubuntu.com/questions/109404/how-do-i-install-different-upgrade-or-downgrade-php-version-in-still-supported
+and use:
+```
+sudo update-alternatives --config php
+```
+
 And set the system to start Apache and MySQL:
 
 ```
