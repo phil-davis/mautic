@@ -104,7 +104,7 @@ trait BasicStructure
                 $email = null;
             }
             $this->createUser(
-                $row ['username'], $row ['password'], $displayName, $email
+                $row['username'], $row['password'], $displayName, $email
             );
         }
     }
@@ -133,7 +133,7 @@ trait BasicStructure
         if ($result['code'] != 0) {
             throw new Exception('could not create user. '.$result['stdOut'].' '.$result['stdErr']);
         }
-        $this->createdUsers [$user] = [
+        $this->createdUsers[$user] = [
             'password'    => $password,
             'displayname' => $displayName,
             'email'       => $email,
@@ -145,7 +145,7 @@ trait BasicStructure
      */
     public function setUpScenarioGetRegularUsers(BeforeScenarioScope $scope)
     {
-        $suiteParameters           = $scope->getEnvironment()->getSuite()->getSettings() ['context'] ['parameters'];
+        $suiteParameters           = $scope->getEnvironment()->getSuite()->getSettings()['context']['parameters'];
         $this->adminUsername       = (string) $suiteParameters['adminUsername'];
         $this->adminPassword       = (string) $suiteParameters['adminPassword'];
         $this->salesUsername       = (string) $suiteParameters['salesUsername'];
