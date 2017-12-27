@@ -1,0 +1,54 @@
+default:
+  autoload:
+    '': %paths.base%/../features/bootstrap
+  extensions:
+    SensioLabs\Behat\PageObjectExtension: ~
+
+  suites:
+    basic:
+      paths:
+        - %paths.base%/../features/basic
+      context: &common_suite_context
+        parameters:
+          mauticPath: ./
+          adminUsername: admin
+          adminPassword: mautic
+          salesUsername: sales
+          salesPassword: mautic
+          regularUserPassword: xyz123456
+          regularUserName: regularuser
+          regularUserNames: user1,user2,user3,usergrp,grpuser
+      contexts:
+        - FeatureContext:
+        - LoginContext:
+        - AccountContext:
+        - AssetsContext:
+        - CalendarContext:
+        - CampaignsContext:
+        - CompaniesContext:
+        - ContactsContext:
+        - DashboardContext:
+        - DynamicContentContext:
+        - EmailsContext:
+        - FocusItemsContext:
+        - FormsContext:
+        - LandingPagesContext:
+        - MarketingMessagesContext:
+        - NavSidebarContext:
+        - NavTopbarContext:
+        - PointsContext:
+        - PointTriggersContext:
+        - ReportsContext:
+        - SegmentsContext:
+        - SocialMonitoringContext:
+        - StagesContext:
+
+    contacts:
+      paths:
+        - %paths.base%/../features/contacts
+      context: *common_suite_context
+      contexts:
+        - FeatureContext:
+        - LoginContext:
+        - ContactsContext:
+        - NewContactContext:
